@@ -25,7 +25,7 @@ function async_get_data() {
   $('p#waiting-span').show();
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
-  var jqxhr = $.getJSON( "/treccs_summary_judge/api/judge/get_year.php", 
+  var jqxhr = $.getJSON( "/reproducibleIR/api/judge/get_year.php", 
       { 
         uid: cur_uid, 
         apikey:cur_apikey

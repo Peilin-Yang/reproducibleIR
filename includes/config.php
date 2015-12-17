@@ -7,20 +7,19 @@ session_start();
 
 //database credentials
 define('DBHOST','localhost');
-define('DBUSER','treccs');
+define('DBUSER','rir');
 define('DBPASS','2HMstyCayMuMRpem');
-define('DBNAME','treccs_summary_judgement');
+define('DBNAME','reproducibleIR');
 
 //application address
-define('FILEDIR', '/treccs_summary_judge/');
-define('SITE','http://everlyn.info:8080/treccs_summary_judge/judge/index.php');
-define('DIR','http://everlyn.info:8080/treccs_summary_judge/login/');
-define('SITENAME','TREC Contextual Suggestion Summary Judgement');
-define('FromEmail','info@TRECCSSJ.org');
-define('ReplyEmail','noreply@TRECCSSJ.org');
+define('FILEDIR', '/reproducibleIR/');
+define('SITE','http://everlyn.info:8080/reproducibleIR/index.php');
+define('DIR','http://everlyn.info:8080/reproducibleIR/login/');
+define('SITENAME','Reproducible Information Retrieval');
+define('FromEmail','info@ReproducibleIR.org');
+define('ReplyEmail','noreply@ReproducibleIR.org');
 
 try {
-
 	//create PDO connection 
 	$db = new PDO("mysql:host=".DBHOST.";port=3306;dbname=".DBNAME, DBUSER, DBPASS);
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -1,8 +1,8 @@
 <?php
 //include config
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/login/includes/head.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/session.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes/head.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/session.php"); 
 
 
 //check if already logged in move to home page

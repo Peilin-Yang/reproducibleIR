@@ -1,8 +1,8 @@
 <?php
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/error_code.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/api/include/util.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/api/include/ruleexception.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/error_code.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/api/include/util.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/api/include/ruleexception.php");
 
 class DAO {
     const SQL_SELECT_USER = "select username from users where uid = :uid and apikey = :apikey";

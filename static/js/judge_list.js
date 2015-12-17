@@ -191,7 +191,7 @@ function set_rating(docid, sec, rating) {
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
   var cur_year = $("#cur_year").text();
-  var jqxhr = $.post( "/treccs_summary_judge/api/judge/set_judgement.php", 
+  var jqxhr = $.post( "/reproducibleIR/api/judge/set_judgement.php", 
     { 
       uid: cur_uid, 
       apikey:cur_apikey,
@@ -263,7 +263,7 @@ function get_user_judgement() {
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
   var cur_year = $("#cur_year").text();
-  var jqxhr = $.getJSON( "/treccs_summary_judge/api/judge/get_judgement.php", 
+  var jqxhr = $.getJSON( "/reproducibleIR/api/judge/get_judgement.php", 
     { 
       uid: cur_uid, 
       apikey:cur_apikey, 
@@ -295,7 +295,7 @@ function get_documents() {
   var cur_apikey = $("#cur_apikey").text();
   var cur_year = $("#cur_year").text();
   cur_request_page = parseInt($("#cur_page").text());
-  var jqxhr = $.getJSON( "/treccs_summary_judge/api/judge/get_docs_of_a_year.php", 
+  var jqxhr = $.getJSON( "/reproducibleIR/api/judge/get_docs_of_a_year.php", 
     { 
       uid: cur_uid, 
       apikey:cur_apikey, 

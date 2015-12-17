@@ -1,5 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/api/include/api_common.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/api/include/api_common.php"); 
 
 $result = $dao->get_compare_docs(
     $util->getFromGet($_GET, "uid"), 

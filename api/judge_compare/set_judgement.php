@@ -1,5 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/api/include/api_common.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/api/include/api_common.php"); 
 
 $result = $dao->set_compare_judgement(
     $util->getFromPost($_POST, "uid"), 

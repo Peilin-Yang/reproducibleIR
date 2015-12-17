@@ -1,5 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/require_login.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/require_login.php"); 
 
   $username = $_SESSION['username'];
 
@@ -23,7 +23,7 @@ require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/require_
             <a href="#" class="dropdown-toggle user" data-toggle="dropdown" role="button" aria-expanded="false">'.$username.'<span class="caret"></span></a>
             <ul class="dropdown-menu nav-dropdown-menu" role="menu">
               <li>
-                <form action="/treccs_summary_judge/login/logout.php">
+                <form action="/reproducibleIR/login/logout.php">
                 <button type="submit" id="logout" class="btn btn-sm btn-danger" title="Log Out"><i class="fa fa-sign-out fa-fw"></i> Log Out</button>
                 </form>
               </li>

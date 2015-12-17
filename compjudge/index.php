@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/require_login.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/require_login.php");
 ?>
 
 
@@ -7,12 +7,12 @@ require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/require_
 <html>
 <head>
     <title><?php echo htmlentities(SITENAME." Judge Comparison"); ?></title>
-    <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/common/common_header.php"); ?>
+    <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/common/common_header.php"); ?>
     <link href="../static/css/bootstrap-switch.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="../static/css/judge_list.css" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/common/navbar_compare_judge.php"); ?>
+  <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/common/navbar_compare_judge.php"); ?>
   <div style="display:none;">
     <p id="cur_uid"><?php echo $_SESSION['uid']; ?></p>
     <p id="cur_apikey"><?php echo $_SESSION['apikey']; ?></p>
@@ -53,7 +53,7 @@ require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/includes/require_
 <footer style="margin-bottom:30px;">
 </footer>
 
-<?php require_once ($_SERVER["DOCUMENT_ROOT"]."/treccs_summary_judge/common/common_footer.php"); ?>
+<?php require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/common/common_footer.php"); ?>
 
 <script type="text/javascript" src="../static/js/star-rating.min.js"></script>
 <script type="text/javascript" src="../static/js/bootstrap-switch.min.js"></script>
