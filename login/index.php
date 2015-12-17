@@ -16,17 +16,17 @@ if(isset($_POST['submit'])){
 		$stmt->execute(array(':username' => $_POST['username']));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		if(!empty($row['username'])){
+		if(!empty($row['username'])) {
 			$error[] = 'Username provided is already in use.';
 		}
-			
+
 	}
 
-	if(strlen($_POST['password']) < 3){
+	if(strlen($_POST['password']) < 6){
 		$error[] = 'Password is too short.';
 	}
 
-	if(strlen($_POST['passwordConfirm']) < 3){
+	if(strlen($_POST['passwordConfirm']) < 6){
 		$error[] = 'Confirm password is too short.';
 	}
 
