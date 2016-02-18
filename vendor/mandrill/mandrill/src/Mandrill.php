@@ -61,7 +61,6 @@ class Mandrill {
         if(!$apikey) $apikey = $this->readConfigs();
         if(!$apikey) throw new Mandrill_Error('You must provide a Mandrill API key');
         $this->apikey = $apikey;
-
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_USERAGENT, 'Mandrill-PHP/1.0.54');
         curl_setopt($this->ch, CURLOPT_POST, true);
@@ -70,7 +69,6 @@ class Mandrill {
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($this->ch, CURLOPT_TIMEOUT, 600);
-
         $this->root = rtrim($this->root, '/') . '/';
 
         $this->templates = new Mandrill_Templates($this);

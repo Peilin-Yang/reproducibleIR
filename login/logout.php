@@ -1,7 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes/head.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/session.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
 
 //logout
 $user->logout(); 

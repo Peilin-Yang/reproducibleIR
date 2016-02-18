@@ -1,6 +1,5 @@
 <?php
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/session.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
 
 function generate_apikey( $length = 64 ) {
     $chars = "abcdefghijklmnopqrstuvwxyz0123456789";

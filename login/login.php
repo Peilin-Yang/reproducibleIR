@@ -1,9 +1,5 @@
 <?php
-//include config
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes/head.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/session.php"); 
-
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
 
 //check if already logged in move to home page
 if( $user->is_logged_in() ) { header('Location: '.SITE); } 

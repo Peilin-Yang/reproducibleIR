@@ -13,8 +13,8 @@ define('DBNAME','reproducibleIR');
 
 //application address
 define('FILEDIR', '/reproducibleIR/');
-define('SITE','http://everlyn.info:8080/reproducibleIR/index.php');
-define('DIR','http://everlyn.info:8080/reproducibleIR/login/');
+define('SITE','http://localhost/reproducibleIR/index.php');
+define('DIR','http://localhost/reproducibleIR/login/');
 define('SITENAME','Reproducible Information Retrieval');
 define('FromEmail','info@ReproducibleIR.org');
 define('ReplyEmail','noreply@ReproducibleIR.org');
@@ -31,7 +31,7 @@ try {
     exit;
 }
 
-require_once ($_SERVER["DOCUMENT_ROOT"] . FILEDIR . "/vendor/mandrill/mandrill/src/Mandrill.php"); //Not required with Composer
+require_once ($_SERVER["DOCUMENT_ROOT"] . FILEDIR . "vendor/mandrill/mandrill/src/Mandrill.php"); //Not required with Composer
 $mandrill = new Mandrill('i3LLpVJctGwbHWuDMzUaJw');
 //var_dump($_SERVER["DOCUMENT_ROOT"]);
 ?>

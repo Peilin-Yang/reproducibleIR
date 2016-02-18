@@ -1,6 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/includes/config.php"); 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes/head.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
 
 //if logged in redirect to members page
 if( $user->is_logged_in() ){ header('Location: '.SITE); } 
@@ -77,7 +76,7 @@ if(isset($_POST['submit'])){
                     'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
                     'subject' => "[".SITENAME."]Registration Confirmation",
                     'from_email' => FromEmail,
-                    'from_name' => SITENAME.'Admin',
+                    'from_name' => SITENAME.' Admin',
                     'to' => array(
                         array(
                             'email' => $_POST['email'],
@@ -117,9 +116,7 @@ require('layout/header.php');
 
 
 <div class="container">
-
 	<div class="row">
-
 	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 			<form role="form" method="post" action="" autocomplete="off">
 				<h2>Please Sign Up</h2>
