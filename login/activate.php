@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
 
 function generate_apikey( $length = 64 ) {
     $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -15,11 +15,10 @@ $active = trim($_GET['y']);
 if(is_numeric($uid) && !empty($active)){
 	$apikey = generate_apikey();
 	//update users record set the active column to Yes where the memberID and active value match the ones provided in the array
-	$stmt = $db->prepare("UPDATE users SET active = 'Yes', apikey=:apikey, activateAt=:activateAt WHERE uid = :uid AND active = :active");
+	$stmt = $db->prepare("UPDATE users SET active = 'Yes', activateAt=:activateAt WHERE uid = :uid AND active = :active");
 	$stmt->execute(array(
 		':activateAt' => gmdate('Y-m-d H:i:s'),
 		':uid' => $uid,
-		':apikey' => $apikey, 
 		':active' => $active
 	));
 

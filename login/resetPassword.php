@@ -1,5 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
 
 //if logged in redirect to members page
 if( $user->is_logged_in() ){ header('Location: '.SITE); } 
@@ -19,11 +19,11 @@ if(empty($row['resetToken'])){
 if(isset($_POST['submit'])){
 
 	//basic validation
-	if(strlen($_POST['password']) < 3){
+	if(strlen($_POST['password']) < 6){
 		$error[] = 'Password is too short.';
 	}
 
-	if(strlen($_POST['passwordConfirm']) < 3){
+	if(strlen($_POST['passwordConfirm']) < 6){
 		$error[] = 'Confirm password is too short.';
 	}
 
@@ -104,12 +104,12 @@ require('layout/header.php');
 					<div class="row">
 						<div class="col-xs-6 col-sm-6 col-md-6">
 							<div class="form-group">
-								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="1">
+								<input type="password" name="password" id="password" class="form-control" placeholder="Password" tabindex="1">
 							</div>
 						</div>
 						<div class="col-xs-6 col-sm-6 col-md-6">
 							<div class="form-group">
-								<input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control input-lg" placeholder="Confirm Password" tabindex="1">
+								<input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" placeholder="Confirm Password" tabindex="2">
 							</div>
 						</div>
 					</div>

@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
 
 //check if already logged in move to home page
 if( $user->is_logged_in() ) { header('Location: '.SITE); } 
@@ -53,13 +53,13 @@ require('layout/header.php');
 					//check the action
 					switch ($_GET['action']) {
 						case 'active':
-							echo "<h2 class='bg-success'>Your account is now active you may now log in.</h2>";
+							echo "<h3 class='bg-success'>Your account is now active you may now log in.</h3>";
 							break;
 						case 'reset':
-							echo "<h2 class='bg-success'>Please check your inbox for a reset link.</h2>";
+							echo "<h3 class='bg-success'>Please check your inbox for a reset link.</h3>";
 							break;
 						case 'resetAccount':
-							echo "<h2 class='bg-success'>Password changed, you may now login.</h2>";
+							echo "<h3 class='bg-success'>Password changed, you may now login.</h3>";
 							break;
 					}
 
@@ -69,11 +69,11 @@ require('layout/header.php');
 				?>
 
 				<div class="form-group">
-					<input type="text" name="username" id="username" class="form-control input-lg" placeholder="User Name" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1">
+					<input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1">
 				</div>
 
 				<div class="form-group">
-					<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="3">
+					<input type="password" name="password" id="password" class="form-control" placeholder="Password" tabindex="3">
 				</div>
 				
 				<div class="row">

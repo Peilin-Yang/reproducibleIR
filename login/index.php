@@ -1,16 +1,18 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
 
 //if logged in redirect to members page
 if( $user->is_logged_in() ){ header('Location: '.SITE); } 
 
 //if form has been submitted process it
-if(isset($_POST['submit'])){
+if(isset($_POST['submit'])) {
 
 	//very basic validation
 	if(strlen($_POST['username']) < 3){
 		$error[] = 'Username is too short.';
-	} else {
+	} else if (strlen($_POST['username']) > 64) {
+    $error[] = 'Username is too long.';
+  } else {
 		$stmt = $db->prepare('SELECT username FROM users WHERE username = :username');
 		$stmt->execute(array(':username' => $_POST['username']));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -43,10 +45,33 @@ if(isset($_POST['submit'])){
 
 		if(!empty($row['email'])){
 			$error[] = 'Email provided is already in use.';
-		}
-			
+		}	
 	}
 
+  // Google reCAPTCHA verification
+  $url = 'https://www.google.com/recaptcha/api/siteverify';
+  $data = array(
+    'secret' => '6LdTpBgTAAAAAI0Oy10NbMP7NPSdODVVs5yJjWHy', 
+    'response' => $_POST['g-recaptcha-response']
+  );
+
+  // use key 'http' even if you send the request to https://...
+  $options = array(
+      'http' => array(
+          'method'  => 'POST',
+          'content' => http_build_query($data),
+      ),
+  );
+  $context  = stream_context_create($options);
+  $result = file_get_contents($url, false, $context);
+  if ($result === FALSE) { 
+    $error[] = 'reCAPTCHA verification failed.';
+  } else {
+    $result = json_decode($result, true);
+    if ($result["success"] === FALSE) {
+      $error[] = 'reCAPTCHA verification failed.';
+    }
+  }
 
 	//if no errors have been created carry on
 	if(!isset($error)){
@@ -59,42 +84,46 @@ if(isset($_POST['submit'])){
 
 		try {
 			//insert into database with a prepared statement
-			$stmt = $db->prepare('INSERT INTO users (username,password,email,active,regAt) VALUES (:username,:password,:email,:active,:regAt)');
-            $stmt->execute(array(
-                ':username' => $_POST['username'],
+			$stmt = $db->prepare('INSERT INTO users (username,password,email,firstname,middlename,lastname,institute,active,regAt) VALUES (:username,:password,:email,:firstname,:middlename,:lastname,:institute,:active,:regAt)');
+      $stmt->execute(array(
+        ':username' => $_POST['username'],
 				':password' => $hashedpassword,
 				':email' => $_POST['email'],
+        ':firstname' => $_POST['firstname'],
+        ':middlename' => $_POST['middlename'],
+        ':lastname' => $_POST['lastname'],
+        ':institute' => $_POST['institute'],
 				':active' => $activasion,
-                ':regAt' => gmdate('Y-m-d H:i:s')
-            ));
+        ':regAt' => gmdate('Y-m-d H:i:s')
+      ));
 
 			$id = $db->lastInsertId('uid');
 
 			//send email
-            try {
-                $message = array(
-                    'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
-                    'subject' => "[".SITENAME."]Registration Confirmation",
-                    'from_email' => FromEmail,
-                    'from_name' => SITENAME.' Admin',
-                    'to' => array(
-                        array(
-                            'email' => $_POST['email'],
-                            'name' => $_POST['username'],
-                            'type' => 'to'
-                        )
-                    ),
-                    'headers' => array('Reply-To' => ReplyEmail),
-                );
-                $async = false;
-                $result = $mandrill->messages->send($message, $async);
-                //print_r($result);  
-            } catch (Mandrill_Error $e) {
-                // Mandrill errors are thrown as exceptions
-                echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
-                // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-                throw $e;
-            }
+      try {
+        $message = array(
+          'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
+          'subject' => "[".SITENAME."]Registration Confirmation",
+          'from_email' => FromEmail,
+          'from_name' => SITENAME.' Admin',
+          'to' => array(
+              array(
+                  'email' => $_POST['email'],
+                  'name' => $_POST['username'],
+                  'type' => 'to'
+              )
+          ),
+          'headers' => array('Reply-To' => ReplyEmail),
+        );
+        $async = false;
+        $result = $mandrill->messages->send($message, $async);
+        //print_r($result);  
+      } catch (Mandrill_Error $e) {
+        // Mandrill errors are thrown as exceptions
+        echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+        // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+        throw $e;
+      }
 
 			//redirect to index page
 			header('Location: index.php?action=joined');
@@ -118,7 +147,7 @@ require('layout/header.php');
 <div class="container">
 	<div class="row">
 	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-			<form role="form" method="post" action="" autocomplete="off">
+			<form role="form" method="post" action="" data-toggle="validator" autocomplete="off">
 				<h2>Please Sign Up</h2>
 				<p>Already a member? <a href='login.php'>Login</a></p>
 				<hr>
@@ -138,26 +167,42 @@ require('layout/header.php');
 				?>
 
 				<div class="form-group">
-					<input type="text" name="username" id="username" class="form-control input-lg" placeholder="User Name" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1">
+					<input type="text" name="username" data-error="The username can only consist of alphabetical, number, dot and underscore. Minimum length is 3 and maximum length is 64." data-minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_\.]+$" id="username" class="form-control" placeholder="User Name" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1" required>
+          <div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
-					<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" value="<?php if(isset($error)){ echo $_POST['email']; } ?>" tabindex="2">
+					<input type="email" data-error="email address is invalid" name="email" id="email" class="form-control" placeholder="Email Address" value="<?php if(isset($error)){ echo $_POST['email']; } ?>" tabindex="2" required>
+          <div class="help-block with-errors"></div>
 				</div>
-				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-6">
-						<div class="form-group">
-							<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="3">
-						</div>
-					</div>
-					<div class="col-xs-6 col-sm-6 col-md-6">
-						<div class="form-group">
-							<input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control input-lg" placeholder="Confirm Password" tabindex="4">
-						</div>
-					</div>
+				<div class="form-group">
+					<input type="password" name="password" id="password" data-minlength="3" class="form-control" placeholder="Password" tabindex="3" required>
+          <div class="help-block with-errors"></div>
 				</div>
-				
+				<div class="form-group">
+					<input type="password" name="passwordConfirm" id="passwordConfirm" data-match="#password" data-match-error="Password don't match" class="form-control" placeholder="Confirm Password" tabindex="4" required>
+          <div class="help-block with-errors"></div>
+				</div>
+				<div class="form-group">
+          <input type="text" name="firstname" id="firstname" class="form-control" placeholder="First Name" value="<?php if(isset($error)){ echo $_POST['firstname']; } ?>" tabindex="5" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group">
+          <input type="text" name="middlename" id="middlename" class="form-control" placeholder="Middle Name" value="<?php if(isset($error)){ echo $_POST['middlename']; } ?>" tabindex="6">
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group">
+          <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name" value="<?php if(isset($error)){ echo $_POST['lastname']; } ?>" tabindex="7" required>
+          <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group">
+          <input type="text" name="institute" id="institute" class="form-control" placeholder="Affiliation" value="<?php if(isset($error)){ echo $_POST['institute']; } ?>" tabindex="8" required>
+          <div class="help-block with-errors"></div>
+        </div>
+
+        <div class="g-recaptcha" data-sitekey="6LdTpBgTAAAAACXhQ5q7jRLM9apH5IiOXsLwWtZh"></div>
+
 				<div class="row">
-					<div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="5"></div>
+					<div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="9"></div>
 				</div>
 			</form>
 		</div>

@@ -30,10 +30,10 @@ class User extends Password{
 		if($this->password_verify($password,$hashed) == 1){
 		    $_SESSION['loggedin'] = true;
 
-		    $stmt = $this->_db->prepare('SELECT uid,apikey,firstLoginAt FROM users WHERE username = :username ');
+		    $stmt = $this->_db->prepare('SELECT uid,email,firstLoginAt FROM users WHERE username = :username ');
 			$stmt->execute(array('username' => $username));
 			$row = $stmt->fetch();
-			if ($row['firstLoginAt'] === NULL) {
+			if (is_null($row['firstLoginAt'])) {
 				$stmt1 = $this->_db->prepare("UPDATE users SET firstLoginAt=:firstLoginAt WHERE username = :username");
 				$stmt1->execute(array(
 					':firstLoginAt' => gmdate('Y-m-d H:i:s'),
@@ -41,8 +41,8 @@ class User extends Password{
 				));
 			}
 		    $_SESSION['uid'] = $row['uid'];
-		    $_SESSION['apikey'] = $row['apikey'];
 		    $_SESSION['username'] = $username;
+		    $_SESSION['email'] = $row['email'];
 
 		    return true;
 		} 	

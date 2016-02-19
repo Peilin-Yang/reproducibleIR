@@ -1,5 +1,5 @@
 <?php 
-require_once ($_SERVER["DOCUMENT_ROOT"]."/reproducibleIR/login/includes.php");  
+require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");  
 
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: login.php'); } 
