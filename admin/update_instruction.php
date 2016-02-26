@@ -25,7 +25,7 @@ require_once "template.php";
 	</div>
 
 <div class="container">
-  <h2><strong>My Account</strong></h2>
+  <h2><strong>Admin</strong></h2>
 
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
@@ -88,7 +88,7 @@ require_once "template.php";
   var $editor = $('#editor');
   $editor.closest('form').submit(function() {
     var code = editor.getSession().getValue();
-    $editor.prev('input[type=hidden]').val(code);
+    $editor.prev('input[type=hidden]').val(code);                
   });
 </script>
 <script type="text/javascript" src="/static/js/add_function.js"></script>

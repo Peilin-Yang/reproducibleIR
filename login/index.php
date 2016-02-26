@@ -84,46 +84,52 @@ if(isset($_POST['submit'])) {
 
 		try {
 			//insert into database with a prepared statement
-			$stmt = $db->prepare('INSERT INTO users (username,password,email,firstname,middlename,lastname,institute,active,regAt) VALUES (:username,:password,:email,:firstname,:middlename,:lastname,:institute,:active,:regAt)');
-      $stmt->execute(array(
-        ':username' => $_POST['username'],
-				':password' => $hashedpassword,
-				':email' => $_POST['email'],
-        ':firstname' => $_POST['firstname'],
-        ':middlename' => $_POST['middlename'],
-        ':lastname' => $_POST['lastname'],
-        ':institute' => $_POST['institute'],
-				':active' => $activasion,
-        ':regAt' => gmdate('Y-m-d H:i:s')
-      ));
+            $stmt = $db->prepare('SELECT COUNT(*) FROM users');
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $isAdmin = $row["COUNT(*)"] == "0" ? 1 : 0;
+
+			$stmt = $db->prepare('INSERT INTO users (username,password,email,firstname,middlename,lastname,institute,isAdmin,active,regAt) VALUES (:username,:password,:email,:firstname,:middlename,:lastname,:institute,:isAdmin,:active,:regAt)');
+            $stmt->execute(array(
+                ':username' => $_POST['username'],
+        		':password' => $hashedpassword,
+        		':email' => $_POST['email'],
+                ':firstname' => $_POST['firstname'],
+                ':middlename' => $_POST['middlename'],
+                ':lastname' => $_POST['lastname'],
+                ':institute' => $_POST['institute'],
+                ':isAdmin' => $isAdmin,
+        		':active' => $activasion,
+                ':regAt' => gmdate('Y-m-d H:i:s')
+            ));
 
 			$id = $db->lastInsertId('uid');
 
 			//send email
-      try {
-        $message = array(
-          'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
-          'subject' => "[".SITENAME."]Registration Confirmation",
-          'from_email' => FromEmail,
-          'from_name' => SITENAME.' Admin',
-          'to' => array(
-              array(
-                  'email' => $_POST['email'],
-                  'name' => $_POST['username'],
-                  'type' => 'to'
-              )
-          ),
-          'headers' => array('Reply-To' => ReplyEmail),
-        );
-        $async = false;
-        $result = $mandrill->messages->send($message, $async);
-        //print_r($result);  
-      } catch (Mandrill_Error $e) {
-        // Mandrill errors are thrown as exceptions
-        echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
-        // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-        throw $e;
-      }
+            try {
+                $message = array(
+                  'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
+                  'subject' => "[".SITENAME."]Registration Confirmation",
+                  'from_email' => FromEmail,
+                  'from_name' => SITENAME.' Admin',
+                  'to' => array(
+                      array(
+                          'email' => $_POST['email'],
+                          'name' => $_POST['username'],
+                          'type' => 'to'
+                      )
+                  ),
+                  'headers' => array('Reply-To' => ReplyEmail),
+                );
+                $async = false;
+                $result = $mandrill->messages->send($message, $async);
+                //print_r($result);  
+                } catch (Mandrill_Error $e) {
+                // Mandrill errors are thrown as exceptions
+                echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+                // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+                throw $e;
+            }
 
 			//redirect to index page
 			header('Location: index.php?action=joined');
@@ -167,35 +173,35 @@ require('layout/header.php');
 				?>
 
 				<div class="form-group">
-					<input type="text" name="username" data-error="The username can only consist of alphabetical, number, dot and underscore. Minimum length is 3 and maximum length is 64." data-minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_\.]+$" id="username" class="form-control" placeholder="User Name" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1" required>
+					<input type="text" name="username" data-error="The username can only consist of alphabetical, number, dot and underscore. Minimum length is 3 and maximum length is 64." data-minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_\.]+$" id="username" class="form-control input-lg" placeholder="User Name" value="<?php if(isset($error)){ echo $_POST['username']; } ?>" tabindex="1" required>
           <div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
-					<input type="email" data-error="email address is invalid" name="email" id="email" class="form-control" placeholder="Email Address" value="<?php if(isset($error)){ echo $_POST['email']; } ?>" tabindex="2" required>
+					<input type="email" data-error="email address is invalid" name="email" id="email" class="form-control input-lg" placeholder="Email Address" value="<?php if(isset($error)){ echo $_POST['email']; } ?>" tabindex="2" required>
           <div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
-					<input type="password" name="password" id="password" data-minlength="3" class="form-control" placeholder="Password" tabindex="3" required>
+					<input type="password" name="password" id="password" data-minlength="3" class="form-control input-lg" placeholder="Password" tabindex="3" required>
           <div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
-					<input type="password" name="passwordConfirm" id="passwordConfirm" data-match="#password" data-match-error="Password don't match" class="form-control" placeholder="Confirm Password" tabindex="4" required>
+					<input type="password" name="passwordConfirm" id="passwordConfirm" data-match="#password" data-match-error="Password don't match" class="form-control input-lg" placeholder="Confirm Password" tabindex="4" required>
           <div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group">
-          <input type="text" name="firstname" id="firstname" class="form-control" placeholder="First Name" value="<?php if(isset($error)){ echo $_POST['firstname']; } ?>" tabindex="5" required>
+          <input type="text" name="firstname" id="firstname" class="form-control input-lg" placeholder="First Name" value="<?php if(isset($error)){ echo $_POST['firstname']; } ?>" tabindex="5" required>
           <div class="help-block with-errors"></div>
         </div>
         <div class="form-group">
-          <input type="text" name="middlename" id="middlename" class="form-control" placeholder="Middle Name" value="<?php if(isset($error)){ echo $_POST['middlename']; } ?>" tabindex="6">
+          <input type="text" name="middlename" id="middlename" class="form-control input-lg" placeholder="Middle Name" value="<?php if(isset($error)){ echo $_POST['middlename']; } ?>" tabindex="6">
           <div class="help-block with-errors"></div>
         </div>
         <div class="form-group">
-          <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name" value="<?php if(isset($error)){ echo $_POST['lastname']; } ?>" tabindex="7" required>
+          <input type="text" name="lastname" id="lastname" class="form-control input-lg" placeholder="Last Name" value="<?php if(isset($error)){ echo $_POST['lastname']; } ?>" tabindex="7" required>
           <div class="help-block with-errors"></div>
         </div>
         <div class="form-group">
-          <input type="text" name="institute" id="institute" class="form-control" placeholder="Affiliation" value="<?php if(isset($error)){ echo $_POST['institute']; } ?>" tabindex="8" required>
+          <input type="text" name="institute" id="institute" class="form-control input-lg" placeholder="Affiliation" value="<?php if(isset($error)){ echo $_POST['institute']; } ?>" tabindex="8" required>
           <div class="help-block with-errors"></div>
         </div>
 

@@ -15,9 +15,10 @@ $active = trim($_GET['y']);
 if(is_numeric($uid) && !empty($active)){
 	$apikey = generate_apikey();
 	//update users record set the active column to Yes where the memberID and active value match the ones provided in the array
-	$stmt = $db->prepare("UPDATE users SET active = 'Yes', activateAt=:activateAt WHERE uid = :uid AND active = :active");
+	$stmt = $db->prepare("UPDATE users SET active = 'Yes', activateAt=:activateAt, apikey=:apikey WHERE uid = :uid AND active = :active");
 	$stmt->execute(array(
 		':activateAt' => gmdate('Y-m-d H:i:s'),
+		':apikey' => $apikey, 
 		':uid' => $uid,
 		':active' => $active
 	));
