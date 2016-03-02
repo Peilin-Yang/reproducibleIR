@@ -7,20 +7,14 @@ require_once "template.php";
 <head>
     <title>Admin</title>
     <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_header.php"); ?>
-    <style type="text/css" media="screen">
-      #editor { 
-        position: relative !important;
-        border: 1px solid lightgray;
-        margin: auto;
-        width: 100%;
-        font-size: 16px;
-      }
-    </style>
+    <link rel="stylesheet" href="/static/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
 </head>
 <body>
   <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/navbar.php"); ?>
 	<div style="display:none;">
 	  <p id="cur_uid"><?php echo $_SESSION['uid']; ?></p>
+    <p id="cur_apikey"><?php echo $_SESSION['apikey']; ?></p>
 	</div>
 <div class="container">
   <h2><strong>My Account</strong></h2>
@@ -33,10 +27,10 @@ require_once "template.php";
     <div class="col-sm-9 col-md-9 col-lg-9">
       <form role="form" id="fform" method="POST" action="/api/admin/update_instruction.php" autocomplete="off">
         <input type="hidden" name="uid" id="uid" class="form-control">
+        <input type="hidden" name="apikey" id="apikey" class="form-control">
         <div class="form-group">
           <label for="content">Model Implementation Instruction</label>
-          <input type="hidden" name="content" class="form-control" id="content" placeholder="content">
-          <div id="editor"></div> 
+          <textarea name="content" id="editor" data-provide="markdown" rows="50"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -54,18 +48,11 @@ require_once "template.php";
 </footer>
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
-<script>
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/iplastic");
-  editor.getSession().setMode("ace/mode/c_cpp");
-  var $editor = $('#editor');
-  $editor.closest('form').submit(function() {
-    var code = editor.getSession().getValue();
-    $editor.prev('input[type=hidden]').val(code);
-    $('input#uid').val($('#cur_uid').html());  
-  });
-</script>
 <script type="text/javascript" src="/static/js/admin_update_ins.js"></script>
+<script src="/static/js/bootstrap-markdown.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+<script src="/static/js/marked.js"></script>
+<!-- <script src="/static/js/markdown.min.js"></script> -->
+<script src="/static/js/to-markdown.js"></script>
 </body>
 </html>

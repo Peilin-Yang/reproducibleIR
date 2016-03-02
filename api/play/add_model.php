@@ -1,8 +1,8 @@
 <?php 
 require_once ($_SERVER["DOCUMENT_ROOT"]."/api/include/api_common.php");
-require_once ($_SERVER["DOCUMENT_ROOT"]."/api/include/dao_admin.php"); 
+require_once ($_SERVER["DOCUMENT_ROOT"]."/api/include/dao_play.php"); 
 
-$result = $dao_admin->update_instruction(
+$result = $dao_admin->add_model(
     $util->getFromPost($_POST, "uid"), 
     $util->getFromPost($_POST, "apikey"), 
     $_POST["content"]

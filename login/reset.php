@@ -1,5 +1,6 @@
 <?php 
 require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/api/include/send_mail.php");
 
 //if logged in redirect to members page
 if( $user->is_logged_in() ){ header('Location: '.SITE); } 
@@ -35,30 +36,11 @@ if(isset($_POST['submit'])){
 				':token' => $token
 			));
 
+            $mail_to = $row['email'];
+            $mail_subject = "[".SITENAME."]Password Reset";
+            $mail_body = "Someone requested that the password be reset. \n\nIf this was a mistake, just ignore this email and nothing will happen.\n\nTo reset your password, visit the following address: ".DIR."resetPassword.php?key=$token";
+            send_mail($mail_to, $mail_subject, $mail_body);
 			//send email
-            try {
-                $message = array(
-                    'text' => "Someone requested that the password be reset. \n\nIf this was a mistake, just ignore this email and nothing will happen.\n\nTo reset your password, visit the following address: ".DIR."resetPassword.php?key=$token",
-                    'subject' => "[".SITENAME."]Password Reset",
-                    'from_email' => FromEmail,
-                    'from_name' => SITENAME.'Admin',
-                    'to' => array(
-                        array(
-                            'email' => $row['email'],
-                            'type' => 'to'
-                        )
-                    ),
-                    'headers' => array('Reply-To' => ReplyEmail),
-                );
-                $async = false;
-                $result = $mandrill->messages->send($message, $async);
-                //print_r($result);  
-            } catch (Mandrill_Error $e) {
-                // Mandrill errors are thrown as exceptions
-                echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
-                // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-                throw $e;
-            }
 
 			//redirect to index page
 			header('Location: login.php?action=reset');

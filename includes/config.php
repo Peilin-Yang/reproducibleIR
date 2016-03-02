@@ -30,8 +30,4 @@ try {
     echo '<p class="bg-danger">'.$e->getMessage().'</p>';
     exit;
 }
-
-require_once ($_SERVER["DOCUMENT_ROOT"] . FILEDIR . "vendor/mandrill/mandrill/src/Mandrill.php"); //Not required with Composer
-$mandrill = new Mandrill('i3LLpVJctGwbHWuDMzUaJw');
-//var_dump($_SERVER["DOCUMENT_ROOT"]);
 ?>

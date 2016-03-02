@@ -1,5 +1,6 @@
 <?php 
 require_once ($_SERVER["DOCUMENT_ROOT"]."/login/includes.php");
+require_once ($_SERVER["DOCUMENT_ROOT"]."/api/include/send_mail.php");
 
 //if logged in redirect to members page
 if( $user->is_logged_in() ){ header('Location: '.SITE); } 
@@ -105,31 +106,10 @@ if(isset($_POST['submit'])) {
 
 			$id = $db->lastInsertId('uid');
 
-			//send email
-            try {
-                $message = array(
-                  'text' => "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n",
-                  'subject' => "[".SITENAME."]Registration Confirmation",
-                  'from_email' => FromEmail,
-                  'from_name' => SITENAME.' Admin',
-                  'to' => array(
-                      array(
-                          'email' => $_POST['email'],
-                          'name' => $_POST['username'],
-                          'type' => 'to'
-                      )
-                  ),
-                  'headers' => array('Reply-To' => ReplyEmail),
-                );
-                $async = false;
-                $result = $mandrill->messages->send($message, $async);
-                //print_r($result);  
-                } catch (Mandrill_Error $e) {
-                // Mandrill errors are thrown as exceptions
-                echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
-                // A mandrill error occurred: Mandrill_Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-                throw $e;
-            }
+            $mail_to = $_POST['email'];
+            $mail_subject = "[".SITENAME."]Registration Confirmation";
+            $mail_body = "Dear ".$_POST['username'].",\n\nThank you for registering at ".SITENAME."\n\n To activate your account, please click on this link:\n\n ".DIR."activate.php?x=$id&y=$activasion\n\n Regards\n\n Site Admin \n\n";
+            send_mail($mail_to, $mail_subject, $mail_body);
 
 			//redirect to index page
 			header('Location: index.php?action=joined');

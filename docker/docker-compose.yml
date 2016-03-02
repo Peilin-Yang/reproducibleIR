@@ -1,0 +1,19 @@
+lamp:
+  image: yangpeilyn/lamp:basic
+  container_name: web
+  ports:
+    - 8080:80
+  environment:
+    - ON_CREATE_DB=rires
+    - SITENAME=rires
+    # backup sql file (optional)
+    - STARTUP_SQL=/mysql_backup/rires.sql
+  volumes:
+    # Server files
+    - /home/ypeilin/Dropbox/code/RIRES/:/var/www/rires/public_html/
+    # backup sql file path
+    - /home/ypeilin/Dropbox/code/RIRES/docker/:/mysql_backup/
+    # For running the docker inside the docker container
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/bin/docker:/bin/docker
+
