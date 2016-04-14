@@ -7,6 +7,9 @@ require_once "template.php";
 <head>
     <title>My Account</title>
     <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_header.php"); ?>
+    <link rel="stylesheet" href="/static/css/bootstrap-sortable.css">
+    <link rel="stylesheet" href="/static/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/get_model.css">
 </head>
 <body>
   <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/navbar.php"); ?>
@@ -17,16 +20,46 @@ require_once "template.php";
 <div class="container">
   <h2><strong>My Account</strong></h2>
   <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
+    <div id="myNavmenu" class="offcanvas">
       <ul class="nav nav-pills nav-stacked">
         <?php echo(show_sidenav(0)); ?>
       </ul>
     </div>
-    <div class="col-sm-9 col-md-9 col-lg-9">
+
+      <button type="button" data-toggle="offcanvas" data-target="#myNavmenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <table id="model-list-table" class="table table-striped table-hover sortable">
+        <thead>
+          <tr>  
+            <th>
+              <i class="fa fa-tag fa-fw"></i>Name
+            </th> 
+            <th>
+              <i class="fa fa-flag-checkered fa-fw"></i>Compile Status
+            </th>
+            <th>
+              <i class="fa fa-clock-o fa-fw"></i>Created Time
+            </th>
+            <th>
+              <i class="fa fa-clock-o fa-fw"></i>Last Modified Time
+            </th>
+            <th>
+              <i class="fa fa-clock-o fa-fw"></i>Last Compiled Time
+            </th>
+          </tr>
+        </thead>
+
+        <tbody data-link="row" class="rowlink">
+
+        </tbody>
+      </table>
       <p class="text-center" id="waiting-span">
         <i class="fa fa-refresh fa-spin fa-6x" style="font-size: 300%;"></i>
       </p>
-    </div>
+    
     <div class="scroll-top-wrapper ">
       <span class="scroll-top-inner">
         <i class="fa fa-2x fa-arrow-circle-up"></i>
@@ -40,5 +73,9 @@ require_once "template.php";
 </footer>
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap-sortable.js"></script>
+<script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/my_model.js"></script>
 </body>
 </html>
