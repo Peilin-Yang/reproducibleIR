@@ -570,6 +570,8 @@
         this.disableButtons('all');
       }
 
+      // Try to get the content from callback
+      options.onPreviewDone(this);
       return this;
     }
 
@@ -1350,6 +1352,7 @@
     /* Events hook */
     onShow: function (e) {},
     onPreview: function (e) {},
+    onPreviewDone: function (e) {},
     onSave: function (e) {},
     onBlur: function (e) {},
     onFocus: function (e) {},

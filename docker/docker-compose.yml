@@ -8,11 +8,15 @@ lamp:
     - SITENAME=rires
     # backup sql file (optional)
     - STARTUP_SQL=/mysql_backup/rires.sql
+    - CODE_PATH=/home/ypeilin/Dropbox/code/RIRES/
+    - CRON_JOBS=/cronjobs/cronjobs
   volumes:
     # Server files
     - /home/ypeilin/Dropbox/code/RIRES/:/var/www/rires/public_html/
     # backup sql file path
     - /home/ypeilin/Dropbox/code/RIRES/docker/:/mysql_backup/
+    # cron jobs file path
+    - /home/ypeilin/Dropbox/code/RIRES/daemon/:/cronjobs/
     # For running the docker inside the docker container
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/bin/docker:/bin/docker

@@ -37,22 +37,29 @@ require_once "template.php";
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="form">
-            <form role="form" id="fform" method="POST" action="" autocomplete="off">
+            <form role="form" id="fform" method="POST" action="/api/play/add_model.php" autocomplete="off">
               <div class="form-group">
-                <label for="fname">Model Name</label>
-                <input type="text" name="fname" class="form-control" id="fname" placeholder="Model Name">
+                <label for="mname">Model Name</label>
+                <input type="text" name="mname" class="form-control" id="mname" placeholder="Model Name">
               </div>
               <div class="form-group">
-                <label for="fpara">Model Parameters</label>
+                <label for="mpara">Model Parameters</label>
                 <p class="help-block">This is just a string indicating the model belongs to model name above.</p>
-                <input type="text" name="fpara" class="form-control" id="fpara" placeholder="Model Parameters">
+                <input type="text" name="mpara" class="form-control" id="mpara" placeholder="Model Parameters">
               </div>
               <div class="form-group">
-                <label for="fbody">Model Implementation</label>
-                <input type="hidden" name="fbody" class="form-control" id="fbody" placeholder="Model Body">
+                <label for="mnotes">Model Notes</label>
+                <p class="help-block">You can leave some notes about the model. You can use text between two dollar signs to add math equations.</p>
+                <input type="text" name="mnotes" class="form-control" id="mnotes" placeholder="Model Notes">
+              </div>
+              <div class="form-group">
+                <label for="mbody">Model Implementation</label>
+                <input type="hidden" name="mbody" class="form-control" id="mbody" placeholder="Model Body">
                 <div id="editor"></div> 
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <input type="hidden" name="uid" id="uid">
+              <input type="hidden" name="apikey" id="apikey">
+              <button type="submit" id="submit_model" class="btn btn-primary">Submit</button>
             </form>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="instruction">Cannot get model implementation instruction from server...</div>
@@ -78,6 +85,7 @@ require_once "template.php";
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
 <script src="/static/js/marked.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" src="/static/js/add_model.js"></script>
 </body>
 </html>

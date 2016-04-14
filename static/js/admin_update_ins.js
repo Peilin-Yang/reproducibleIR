@@ -1,3 +1,5 @@
+var add_mathjax = false;
+
 function reg_form_submission() {
   var $editor = $('#editor');
   $editor.closest('form').submit(function() {
@@ -38,7 +40,7 @@ function get_data() {
           .done(function(data) {
             //console.log(data);
             if (data['status'] == 200) {
-              marked(data['data']['content']);
+              e.setContent(data['data']['content']);
             } else {
               
             }
@@ -49,6 +51,9 @@ function get_data() {
           .always(function() {
             $.unblockUI();
         });
+      },
+      onPreviewDone: function(e) {
+        MathJax.Hub.Typeset();
       }
     });
 }
@@ -59,6 +64,21 @@ function init_markdown() {
     highlight: function (code) {
       return hljs.highlightAuto(code).value;
     }
+  });
+}
+
+function init_mathjax() {
+  MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+    }
+  });
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i = 0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
   });
 }
 
@@ -80,6 +100,7 @@ $(document).ready(function() {
   };
 
   init_markdown();
+  init_mathjax();
   get_data();
   reg_form_submission();
   reg_post_form();

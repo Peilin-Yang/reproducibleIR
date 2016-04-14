@@ -9,6 +9,9 @@ require_once "template.php";
     <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_header.php"); ?>
     <link rel="stylesheet" href="/static/css/bootstrap-markdown.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
+    <style TYPE="text/css">
+    code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+    </style>
 </head>
 <body>
   <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/navbar.php"); ?>
@@ -54,5 +57,6 @@ require_once "template.php";
 <script src="/static/js/marked.js"></script>
 <!-- <script src="/static/js/markdown.min.js"></script> -->
 <script src="/static/js/to-markdown.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
