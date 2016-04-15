@@ -1,0 +1,34 @@
+#editor { 
+  position: relative !important;
+  border: 1px solid lightgray;
+  margin: auto;
+  width: 100%;
+  font-size: 16px;
+}
+
+code.has-jax {
+  font: inherit; 
+  font-size: 100%; 
+  background: inherit; 
+  border: inherit;
+}
+
+#status-content {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.status-span {
+    font-weight: bold;
+}
+.compile-status {
+    font-weight: bold;
+}
+.compile-waiting {
+    color: #31708f;
+}
+.compile-success {
+    color: #3c763d;
+}
+.compile-fail {
+    color: #a94442; 
+}

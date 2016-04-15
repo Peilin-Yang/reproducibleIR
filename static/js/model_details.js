@@ -90,6 +90,61 @@ function reg_post() {
   });
 }
 
+function fillin_form(data) {
+  $("input#mname").val(data['mname']);
+  $("input#mpara").val(data['mpara']);
+  $("input#mnotes").val(data['mnotes']);
+  var $editor = $('#editor');
+  //console.log($editor);
+  g_editor.setValue(data['mbody']);
+}
+
+function show_status(data) {
+  $("#submitted_dt").text(moment.utc(data['submitted_dt'], "YYYY-MM-DD HH:mm:ss").local());
+  $("#last_modified_dt").text(moment.utc(data['last_modified_dt'], "YYYY-MM-DD HH:mm:ss").local());
+  $("#last_compile_dt").text(moment.utc(data['last_compile_dt'], "YYYY-MM-DD HH:mm:ss").local());
+  var status_str = "";
+  var status_class = "";
+  if (data['compile_status'] == -1) {
+    status_str = "Waiting For Compile";
+    status_class = "compile-status compile-waiting";
+  } else if (data['compile_status'] == 0) {
+    status_str = "Compile Successed";
+    status_class = "compile-status compile-success";
+  } else if (data['compile_status'] == 1) {
+    status_str = "Compile Failed";
+    status_class = "compile-status compile-fail";
+    $("#compile_msg").addClass("alert alert-danger");
+  } 
+  $("#compile_status").text(status_str);
+  $("#compile_status").addClass(status_class);
+  $("#compile_msg").html(data['compile_msg'].replace(/[\n\r]/g, '</br>'));
+}
+
+function get_model_details() {
+  $.blockUI({ message: "getting model details..." });
+  var cur_uid = $("#cur_uid").text();
+  var cur_apikey = $("#cur_apikey").text();
+  var cur_model_id = $("#cur_mid").text();
+  $.getJSON('/api/play/get_model_details.php', { uid: cur_uid, apikey: cur_apikey, mid: cur_model_id })
+    .done(function(data) {
+      //console.log(data);
+      if (data['status'] == 200) {
+        show_status(data['data']);
+        fillin_form(data['data']);
+      } else {
+        
+      }
+    })
+    .fail(function() {
+      
+    })
+    .always(function() {
+      $.unblockUI();
+      $('p#waiting-span').hide();
+  });
+}
+
 $(document).ready(function() {
   toastr.options = {
     "closeButton": true,
@@ -106,10 +161,11 @@ $(document).ready(function() {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   };
-  reg_toggle_menu();
+
   init_ace_editor();
   init_markdown();
   init_mathjax();
+  get_model_details();
   get_instruction();
   reg_post();
 

@@ -24,7 +24,7 @@ function add_data_to_table(_data) {
     },
     table_row = 
     '<tr id="%ID%"> \
-      <td>%NAME%</td> \
+      <td><a href="model_details.php?mid=%ID%">%NAME%</a></td> \
       <td data-value="%COMPILE_STATUS%" class="%STATUS_CLASS%">%COMPILE_STATUS%</td> \
       <td data-dateformat="YYYY-MM-DD HH:mm:ss" data-value="%CREATED_AT%">%CREATED_AT%</td> \
       <td data-dateformat="YYYY-MM-DD HH:mm:ss" data-value="%LAST_MODIFIED%">%LAST_MODIFIED%</td> \
@@ -43,7 +43,7 @@ function async_get_data(sort_field, sort_order, _start, _end) {
   $('p#waiting-span').show();
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
-  var jqxhr = $.getJSON( "/api/play/get_model.php", 
+  var jqxhr = $.getJSON( "/api/play/get_model_list.php", 
       { 
         uid: cur_uid, 
         apikey: cur_apikey, 
@@ -68,6 +68,35 @@ function async_get_data(sort_field, sort_order, _start, _end) {
         $('p#waiting-span').hide();
         isPreviousLoadComplete = true;
     });
+}
+
+function get_more_data() {
+  var cur_all_data = $("table#model-list-table").find("tbody").find("tr");
+  //console.log(cur_all_data);
+  var start = 1, end = 30;
+  var cur_data_len = cur_all_data.length;
+  var sorted_column = $("table#model-list-table").find("thead").find("tr").find("th.sorted");
+  var sort_field;
+  var sort_order;
+  if (sorted_column.length == 0) {
+    sort_field = 0; // cutoff_time
+    sort_order = "desc";
+  } else {
+    var sortkey = sorted_column.attr('data-sortkey');
+    if (sortkey === "1-0") {
+        sort_field = 2; // title
+      } else if (sortkey === "2-0") {
+        sort_field = 3; // status
+      } else if (sortkey === "3-0") {
+        sort_field = 1; // cutoff_time
+      } else if (sortkey === "4-0") {
+        sort_field = 4; // money amount
+      }
+
+    sort_order = sorted_column.hasClass("up") ? "desc" : "asc";
+  }
+
+  async_get_data(sort_field, sort_order, cur_data_len+start, cur_data_len+end);
 }
 
 function scrollToTop() {
@@ -114,7 +143,7 @@ $(document).ready(function() {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   };
-
+  reg_toggle_menu();
   reg_scroll_callback();
   async_get_data(0, "desc", 1, 30);
   // for more data

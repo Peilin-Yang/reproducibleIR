@@ -7,11 +7,8 @@ require_once "template.php";
 <head>
     <title>Admin</title>
     <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_header.php"); ?>
-    <link rel="stylesheet" href="/static/css/bootstrap-markdown.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
-    <style TYPE="text/css">
-    code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
-    </style>
+    <link rel="stylesheet" href="/static/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/add_index.css">
 </head>
 <body>
   <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/navbar.php"); ?>
@@ -24,16 +21,37 @@ require_once "template.php";
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
       <ul class="nav nav-pills nav-stacked">
-        <?php echo(show_sidenav(0)); ?>
+        <?php echo(show_sidenav(1)); ?>
       </ul>
     </div>
     <div class="col-sm-9 col-md-9 col-lg-9">
+      <table id="index-list-table" class="table table-striped table-hover sortable">
+        <caption>Existing Index Paths</caption>
+        <thead>
+          <tr>  
+            <th>
+              <i class="fa fa-tag fa-fw"></i>Name
+            </th> 
+            <th>
+              <i class="fa fa-file-text-o fa-fw"></i>Path
+            </th>
+            <th>
+              <i class="fa fa-clock-o fa-fw"></i>Added Time
+            </th>
+          </tr>
+        </thead>
+
+        <tbody data-link="row" class="rowlink">
+
+        </tbody>
+      </table>
+
       <form role="form" id="fform" method="POST" action="/api/admin/update_instruction.php" autocomplete="off">
         <input type="hidden" name="uid" id="uid" class="form-control">
         <input type="hidden" name="apikey" id="apikey" class="form-control">
         <div class="form-group">
-          <label for="content">Model Implementation Instruction</label>
-          <textarea name="content" id="editor" data-provide="markdown" rows="50"></textarea>
+          <label for="index_path">Add Index Path</label>
+          <textarea name="index_path" class="form-control" rows="5"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -51,12 +69,8 @@ require_once "template.php";
 </footer>
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
-<script type="text/javascript" src="/static/js/admin_update_ins.js"></script>
-<script src="/static/js/bootstrap-markdown.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
-<script src="/static/js/marked.js"></script>
-<!-- <script src="/static/js/markdown.min.js"></script> -->
-<script src="/static/js/to-markdown.js"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/add_index.js"></script>
 </body>
 </html>

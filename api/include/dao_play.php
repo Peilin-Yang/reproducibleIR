@@ -3,7 +3,9 @@ require_once "dao.php";
 
 class DAOPlay extends DAO {
     const SQL_ADD_MODEL = "INSERT INTO models (uid, mname, mpara, mnotes, mbody, submitted_dt, last_modified_dt) VALUES(:uid, :mname, :mpara, :mnotes, :mbody, :submitted_dt, :last_modified_dt)";
-    const SQL_GET_MODEL = "SELECT * FROM models";
+    const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
+    const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
+    const SQL_GET_INDEX_LIST = "SELECT * FROM index";
 
     private static $column_lookup = [
         "0" => "uid",
@@ -51,13 +53,13 @@ class DAOPlay extends DAO {
         return static::$column_lookup["0"]; 
     }
 
-    public function get_model($uid, $apikey, $request_uid, 
+    public function get_model_list($uid, $apikey, $request_uid, 
             $sort_field = "0", $order = "desc", $start = "0", 
             $end = "-1") {
         $this->validate_user($uid, $apikey);
         try {
             global $db;
-            $sql_qry = self::SQL_GET_MODEL;
+            $sql_qry = self::SQL_GET_MODEL_LIST;
             if (!empty($request_uid)) {
                 $sql_qry .= " WHERE uid=:uid";
             }
@@ -80,6 +82,34 @@ class DAOPlay extends DAO {
                 $stmt->bindValue(':uid', $request_uid, PDO::PARAM_STR);
             }
             //var_dump($sql_qry);
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+    public function get_model_details($uid, $apikey, $mid) {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_MODEL_DETAIL);
+            $stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+
+    public function get_index_list($uid, $apikey) {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_INDEX_LIST);
             $stmt->execute();
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $row;

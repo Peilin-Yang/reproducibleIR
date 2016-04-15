@@ -9,6 +9,7 @@ require_once "template.php";
     <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_header.php"); ?>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
+    <link rel="stylesheet" href="/static/css/jasny-bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/add_model.css">
 </head>
 <body>
@@ -22,20 +23,22 @@ require_once "template.php";
   <h2><strong>My Account</strong></h2>
 
   <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
+    <div id="myNavmenu" class="col-sm-3 col-md-3 col-lg-3 offcanvas">
       <ul class="nav nav-pills nav-stacked">
         <?php echo(show_sidenav(1)); ?>
       </ul>
     </div>
-    <div class="col-sm-9 col-md-9 col-lg-9">
-      <div>
+    <div class="main-content">
+      <button id="btn-menu-toggle" type="button" data-toggle="offcanvas" data-target="#myNavmenu">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </button>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active"><a href="#form" aria-controls="form" role="tab" data-toggle="tab">Implementation</a></li>
           <li role="presentation"><a href="#instruction" aria-controls="instruction" role="tab" data-toggle="tab">Instruction</a></li>
         </ul>
         <!-- Tab panes -->
-        <div class="tab-content">
+        <div class="tab-content main-content">
           <div role="tabpanel" class="tab-pane fade in active" id="form">
             <form role="form" id="fform" method="POST" action="/api/play/add_model.php" autocomplete="off">
               <div class="form-group">
@@ -64,8 +67,6 @@ require_once "template.php";
           </div>
           <div role="tabpanel" class="tab-pane fade" id="instruction">Cannot get model implementation instruction from server...</div>
         </div>
-
-      </div>
       
     </div>
     <div class="scroll-top-wrapper ">
@@ -83,9 +84,11 @@ require_once "template.php";
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
-<script src="/static/js/marked.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+<script type="text/javascript" src="/static/js/marked.js"></script>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/play.js"></script>
 <script type="text/javascript" src="/static/js/add_model.js"></script>
 </body>
 </html>
