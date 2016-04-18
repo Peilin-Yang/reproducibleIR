@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 03, 2016 at 08:21 PM
+-- Generation Time: Apr 16, 2016 at 07:57 PM
 -- Server version: 5.5.47-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -19,6 +19,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `rires`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `index_paths`
+--
+
+CREATE TABLE IF NOT EXISTS `index_paths` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) NOT NULL COMMENT 'the uid that added the index',
+  `iname` varchar(255) NOT NULL COMMENT 'index name',
+  `path` varchar(255) NOT NULL COMMENT 'index path',
+  `add_dt` datetime NOT NULL,
+  `notes` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `UIDFK` (`uid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `index_paths`
+--
+
+INSERT INTO `index_paths` (`id`, `uid`, `iname`, `path`, `add_dt`, `notes`) VALUES
+(2, 3, 'disk12', '/indexes/disk12/', '2016-04-16 00:27:08', 'disk12 is for TREC1,2,3'),
+(4, 3, 'disk45', '/indexes/disk45/', '2016-04-16 18:02:47', 'disk45 is for queries TREC6,7,8 and ROBUST04.');
 
 -- --------------------------------------------------------
 
@@ -46,6 +71,7 @@ INSERT INTO `info` (`name`, `content`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `models` (
+  `mid` bigint(20) NOT NULL AUTO_INCREMENT,
   `uid` bigint(12) NOT NULL,
   `mname` varchar(255) NOT NULL,
   `mpara` varchar(255) NOT NULL,
@@ -56,18 +82,45 @@ CREATE TABLE IF NOT EXISTS `models` (
   `last_compile_dt` datetime NOT NULL,
   `compile_status` tinyint(4) NOT NULL DEFAULT '-1',
   `compile_msg` mediumtext NOT NULL,
-  PRIMARY KEY (`uid`,`mname`,`mpara`),
+  PRIMARY KEY (`mid`),
   KEY `uid` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `models`
 --
 
-INSERT INTO `models` (`uid`, `mname`, `mpara`, `mnotes`, `mbody`, `submitted_dt`, `last_modified_dt`, `last_compile_dt`, `compile_status`, `compile_msg`) VALUES
-(3, '11sdf', 'sdfjdlsjf', 'xcvxcvsadfdsfsadfsdfs', 'sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv', '2016-03-03 02:50:48', '2016-03-03 02:50:48', '2016-03-03 20:14:21', -1, '../src/TermScoreFunction.cpp:1:1: error: ''sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv'' does not name a type\n sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv\n ^\nmake[1]: *** [TermScoreFunction.o] Error 1\nmake: *** [all] Error 2\n\n'),
-(3, 'sec', 'asdfczxc', '1111', 'sdfsdfv', '2016-03-03 02:57:28', '2016-03-03 02:57:28', '0000-00-00 00:00:00', -1, ''),
-(3, 'test', '1', 'this is the formal test', '#include "indri/TermScoreFunction.hpp"\r\n#include <cmath>\r\n\r\nindri::query::TermScoreFunction::TermScoreFunction( double collectionOccurence, double collectionSize, double documentOccurrences, double documentCount, double queryLength, std::map<std::string, double>& paras ) {\r\n  _collectionOccurence = collectionOccurence;\r\n  _collectionSize = collectionSize;\r\n  _documentOccurrences = documentOccurrences;\r\n  _documentCount = documentCount;\r\n}\r\n\r\n\r\ndouble indri::query::TermScoreFunction::scoreOccurrence( double occurrences, int contextSize, double qtf, double docUniqueTerms ) {\r\n  return qtf * occurrences;\r\n}', '2016-03-03 18:58:01', '2016-03-03 18:58:01', '2016-03-03 20:20:45', -1, '');
+INSERT INTO `models` (`mid`, `uid`, `mname`, `mpara`, `mnotes`, `mbody`, `submitted_dt`, `last_modified_dt`, `last_compile_dt`, `compile_status`, `compile_msg`) VALUES
+(1, 3, '11sdf', 'sdfjdlsjf', 'xcvxcvsadfdsfsadfsdfs', 'sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv', '2016-03-03 02:50:48', '2016-03-03 02:50:48', '2016-04-14 14:04:06', 1, '../src/TermScoreFunction.cpp:1:1: error: ''sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv'' does not name a type\n sadfsdfsafsdfsfdfvcxvcxvcxvcxvcxv\n ^\nmake[1]: *** [TermScoreFunction.o] Error 1\nmake: *** [all] Error 2\n\n'),
+(2, 3, 'sec', 'asdfczxc', '1111', 'sdfsdfv', '2016-03-03 02:57:28', '2016-03-03 02:57:28', '2016-04-14 14:04:08', 1, '../src/TermScoreFunction.cpp:1:1: error: ''sdfsdfv'' does not name a type\n sdfsdfv\n ^\nmake[1]: *** [TermScoreFunction.o] Error 1\nmake: *** [all] Error 2\n\n'),
+(3, 3, 'test', '1', 'this is the formal test', '#include "indri/TermScoreFunction.hpp"\r\n#include <cmath>\r\n\r\nindri::query::TermScoreFunction::TermScoreFunction( double collectionOccurence, double collectionSize, double documentOccurrences, double documentCount, double queryLength, std::map<std::string, double>& paras ) {\r\n  _collectionOccurence = collectionOccurence;\r\n  _collectionSize = collectionSize;\r\n  _documentOccurrences = documentOccurrences;\r\n  _documentCount = documentCount;\r\n}\r\n\r\n\r\ndouble indri::query::TermScoreFunction::scoreOccurrence( double occurrences, int contextSize, double qtf, double docUniqueTerms ) {\r\n  return qtf * occurrences;\r\n}', '2016-03-03 18:58:01', '2016-03-03 18:58:01', '2016-04-14 14:04:18', 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `query_paths`
+--
+
+CREATE TABLE IF NOT EXISTS `query_paths` (
+  `query_tag` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `index_id` bigint(20) NOT NULL COMMENT 'query must be associated with index',
+  `query_path` varchar(255) NOT NULL,
+  `evaluation_path` varchar(255) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `add_dt` datetime NOT NULL,
+  PRIMARY KEY (`query_tag`),
+  KEY `uid` (`uid`),
+  KEY `index_path` (`index_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `query_paths`
+--
+
+INSERT INTO `query_paths` (`query_tag`, `uid`, `name`, `index_id`, `query_path`, `evaluation_path`, `notes`, `add_dt`) VALUES
+(1, 3, 'TREC1', 2, '/queries/trec1', '/evaluations/trec1', 'query topics for TREC6', '2016-04-16 19:54:00');
 
 -- --------------------------------------------------------
 
@@ -110,10 +163,23 @@ INSERT INTO `users` (`uid`, `username`, `email`, `password`, `active`, `regAt`, 
 --
 
 --
+-- Constraints for table `index_paths`
+--
+ALTER TABLE `index_paths`
+  ADD CONSTRAINT `index_paths_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
+
+--
 -- Constraints for table `models`
 --
 ALTER TABLE `models`
   ADD CONSTRAINT `models_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `query_paths`
+--
+ALTER TABLE `query_paths`
+  ADD CONSTRAINT `query_paths_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`),
+  ADD CONSTRAINT `query_paths_ibfk_2` FOREIGN KEY (`index_id`) REFERENCES `index_paths` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -48,7 +48,7 @@ require_once "template.php";
         </div>
 
         <div role="tabpanel" class="tab-pane fade in active" id="form">
-          <form role="form" id="fform" method="POST" action="/api/play/add_model.php" autocomplete="off">
+          <form role="form" id="fform" method="POST" action="/api/play/add_update_model.php" autocomplete="off">
             <div class="form-group">
               <label for="mname">Model Name</label>
               <input type="text" name="mname" class="form-control" id="mname" placeholder="Model Name">
@@ -70,21 +70,22 @@ require_once "template.php";
             </div>
             <input type="hidden" name="uid" id="uid">
             <input type="hidden" name="apikey" id="apikey">
+            <input type="hidden" name="mid" id="mid">
             <button type="submit" id="submit_model" class="btn btn-primary">Submit Modification</button>
           </form>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="instruction">Cannot get model implementation instruction from server...</div>
       </div>
 
-    <p class="text-center" id="waiting-span">
-      <i class="fa fa-refresh fa-spin fa-6x" style="font-size: 300%;"></i>
-    </p>
-    
-    <div class="scroll-top-wrapper ">
-      <span class="scroll-top-inner">
-        <i class="fa fa-2x fa-arrow-circle-up"></i>
-      </span>
-    </div>  
+      <p class="text-center" id="waiting-span">
+        <i class="fa fa-refresh fa-spin fa-6x" style="font-size: 300%;"></i>
+      </p>
+      
+      <div class="scroll-top-wrapper ">
+        <span class="scroll-top-inner">
+          <i class="fa fa-2x fa-arrow-circle-up"></i>
+        </span>
+      </div>  
     </div>
   </div>
 

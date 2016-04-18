@@ -6,20 +6,21 @@ function reg_post() {
 
     $('input#uid').val($('#cur_uid').html());
     $('input#apikey').val($('#cur_apikey').html());
+    $('input#iid').val($('#cur_iid').html());
     $.post($('#fform').attr('action'), $('#fform').serialize(), function() {})
       .done(function(data) {
         //console.log(data);
         if (data['status'] == 200) {
-          toastr.success('Successfully added index!');
+          toastr.success('Successfully updated the index!');
           setTimeout(function() {
             window.location.href = '/admin/add_index_path.php';
           }, 500);
         } else {
-          toastr.error('Failed to add index:'+data['reason']);
+          toastr.error('Failed to update the index:'+data['reason']);
         }
       })
       .fail(function() {
-        toastr.error('Failed to add index for unknown reason!');
+        toastr.error('Failed to update the index for unknown reason!');
       })
       .always(function() {
         $('#submit_index').find("i").remove();
@@ -28,53 +29,33 @@ function reg_post() {
   });
 }
 
-function update_index_table(data) {
-  if (data.length == 0) {
-    $("#index-list-table").hide();
-  } else {
-    $.each(data, function(i, obj) {
-      var replacements = {
-        "%ID%":obj.id,
-        "%UID%":obj.uid,
-        "%NAME%":obj.iname,
-        "%PATH%":obj.path,
-        "%ADDED_AT%":moment.utc(obj.add_dt, "YYYY-MM-DD HH:mm:ss").local(),
-        "%NOTES%":obj.notes
-      },
-      table_row = 
-      '<tr id="%ID%"> \
-        <td><a href="update_index_path.php?iid=%ID%">%NAME%</a></td> \
-        <td>%PATH%</td> \
-        <td data-dateformat="YYYY-MM-DD HH:mm:ss" data-value="%ADDED_AT%">%ADDED_AT%</td> \
-      </tr>';
-
-      table_row = table_row.replace(/%\w+%/g, function(all) {
-         return replacements[all] || "NULL";
-      });
-      //console.log(table_row);
-      $('table#index-list-table').append(table_row);
-    });
-  }
+function fillin_form(data) {
+  $("input#name").val(data['iname']);
+  $("#index_path").val(data['path']);
+  $("input#notes").val(data['notes']);
 }
 
-function get_index_list() {
-  $.blockUI({ message: "getting existing index list..." });
+function get_index_details() {
+  $.blockUI({ message: "getting index details..." });
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
-  $.getJSON('/api/play/get_index_list.php', { uid: cur_uid, apikey: cur_apikey })
+  var cur_index_id = $("#cur_iid").text();
+  $.getJSON('/api/play/get_index_details.php', { uid: cur_uid, apikey: cur_apikey, iid: cur_index_id })
     .done(function(data) {
       //console.log(data);
       if (data['status'] == 200) {
-        update_index_table(data['data']);
+        //show_status(data['data']);
+        fillin_form(data['data']);
       } else {
-        toastr.error('Failed to get index list:'+data['reason']);
+        
       }
     })
     .fail(function() {
-        toastr.error('Failed to get index list for unknown reason!');
+      
     })
     .always(function() {
       $.unblockUI();
+      $('p#waiting-span').hide();
   });
 }
 
@@ -95,6 +76,6 @@ $(document).ready(function() {
     "hideMethod": "fadeOut"
   };
 
-  get_index_list();
+  get_index_details();
   reg_post();
 });

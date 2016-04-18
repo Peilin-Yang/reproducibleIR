@@ -68,6 +68,7 @@ function reg_post() {
     $editor.prev('input[type=hidden]').val(code);
     $('input#uid').val($('#cur_uid').html());
     $('input#apikey').val($('#cur_apikey').html());
+    $('input#mid').val($('#cur_mid').html());
     $.post($('#fform').attr('action'), $('#fform').serialize(), function() {})
       .done(function(data) {
         //console.log(data);

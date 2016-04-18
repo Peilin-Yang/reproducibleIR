@@ -3,7 +3,7 @@ require_once "/var/www/".getenv("SITENAME")."/public_html/includes/config.php";
 
 class Deamon {
     const SQL_FETCH_ONE_MODEL = "SELECT * FROM models WHERE compile_status=-1 ORDER BY last_modified_dt ASC LIMIT 10";
-    const SQL_UPDATE_COMPILE_MODEL = "UPDATE models SET last_compile_dt=:last_compile_dt, compile_status=:compile_status, compile_msg=:compile_msg WHERE uid=:uid AND mname=:mname AND mpara=:mpara";
+    const SQL_UPDATE_COMPILE_MODEL = "UPDATE models SET last_compile_dt=:last_compile_dt, compile_status=:compile_status, compile_msg=:compile_msg WHERE mid=:mid";
 
     private $_env_sitename;
     private $_code_path;
@@ -58,7 +58,7 @@ class Deamon {
         }
     }
 
-    private function update_model_compile_db($compile_status, $compile_msg, $uid, $mname, $mpara) {
+    private function update_model_compile_db($compile_status, $compile_msg, $mid) {
         try {
             global $db;
             $stmt = $db->prepare(self::SQL_UPDATE_COMPILE_MODEL);
@@ -66,9 +66,7 @@ class Deamon {
                 ':last_compile_dt' => gmdate('Y-m-d H:i:s'),
                 ':compile_status' => $compile_status, 
                 ':compile_msg' => $compile_status === 0 ? "" : $compile_msg,
-                ':uid' => $uid,
-                ':mname' => $mname,
-                ':mpara' => $mpara
+                ':mid' => $mid
             ));
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
@@ -91,9 +89,7 @@ class Deamon {
                 $this->update_model_compile_db(
                     $status_code, 
                     $status_msg, 
-                    $value['uid'],
-                    $value['mname'],
-                    $value['mpara']
+                    $value['mid']
                 );
             };
         } catch( PDOException $Exception ) {

@@ -1,5 +1,7 @@
+var g_index_dict = {};
+
 function reg_post() {
-  $('#submit_index').on('click', function (e) {
+  $('#submit_query').on('click', function (e) {
     e.preventDefault();
     $(this).prepend('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>');
     $(this).prop("disabled", true);
@@ -10,41 +12,45 @@ function reg_post() {
       .done(function(data) {
         //console.log(data);
         if (data['status'] == 200) {
-          toastr.success('Successfully added index!');
+          toastr.success('Successfully added query!');
           setTimeout(function() {
-            window.location.href = '/admin/add_index_path.php';
+            window.location.href = '/admin/add_query_path.php';
           }, 500);
         } else {
-          toastr.error('Failed to add index:'+data['reason']);
+          toastr.error('Failed to add query:'+data['reason']);
         }
       })
       .fail(function() {
-        toastr.error('Failed to add index for unknown reason!');
+        toastr.error('Failed to add query for unknown reason!');
       })
       .always(function() {
-        $('#submit_index').find("i").remove();
-        $('#submit_index').prop("disabled", false);
+        $('#submit_query').find("i").remove();
+        $('#submit_query').prop("disabled", false);
       }, "json");
   });
 }
 
-function update_index_table(data) {
+function update_query_table(data) {
   if (data.length == 0) {
-    $("#index-list-table").hide();
+    $("#query-list-table").hide();
   } else {
     $.each(data, function(i, obj) {
       var replacements = {
-        "%ID%":obj.id,
+        "%ID%":obj.query_tag,
         "%UID%":obj.uid,
-        "%NAME%":obj.iname,
-        "%PATH%":obj.path,
+        "%INDEX%":g_index_dict[obj.index_id],
+        "%NAME%":obj.name,
+        "%QUERY_PATH%":obj.query_path,
+        "%EVALUATION_PATH%":obj.evaluation_path,
         "%ADDED_AT%":moment.utc(obj.add_dt, "YYYY-MM-DD HH:mm:ss").local(),
         "%NOTES%":obj.notes
       },
       table_row = 
       '<tr id="%ID%"> \
-        <td><a href="update_index_path.php?iid=%ID%">%NAME%</a></td> \
-        <td>%PATH%</td> \
+        <td><a href="update_query_path.php?querytag=%ID%">%NAME%</a></td> \
+        <td>%INDEX%</td> \
+        <td>%QUERY_PATH%</td> \
+        <td>%EVALUATION_PATH%</td> \
         <td data-dateformat="YYYY-MM-DD HH:mm:ss" data-value="%ADDED_AT%">%ADDED_AT%</td> \
       </tr>';
 
@@ -52,9 +58,27 @@ function update_index_table(data) {
          return replacements[all] || "NULL";
       });
       //console.log(table_row);
-      $('table#index-list-table').append(table_row);
+      $('table#query-list-table').append(table_row);
     });
   }
+}
+
+function update_index_select(data) {
+  $.each(data, function(i, obj) {
+    g_index_dict[obj.id] = obj.iname;
+    var replacements = {
+      "%INDEX_ID%":obj.id,
+      "%INDEX_NAME%":obj.iname
+    },
+    table_row = 
+    '<option value="%INDEX_ID%">%INDEX_NAME%</option>';
+
+    table_row = table_row.replace(/%\w+%/g, function(all) {
+       return replacements[all] || "NULL";
+    });
+    //console.log(table_row);
+    $('#index_id').append(table_row);
+  });
 }
 
 function get_index_list() {
@@ -64,8 +88,29 @@ function get_index_list() {
   $.getJSON('/api/play/get_index_list.php', { uid: cur_uid, apikey: cur_apikey })
     .done(function(data) {
       //console.log(data);
+      if (data['status'] == 200) { 
+        update_index_select(data['data']);
+      } else {
+        toastr.error('Failed to get index list:'+data['reason']);
+      }
+    })
+    .fail(function() {
+        toastr.error('Failed to get index list for unknown reason!');
+    })
+    .always(function() {
+      $.unblockUI();
+  });
+}
+
+function get_query_list() {
+  $.blockUI({ message: "getting existing query list..." });
+  var cur_uid = $("#cur_uid").text();
+  var cur_apikey = $("#cur_apikey").text();
+  $.getJSON('/api/play/get_query_list.php', { uid: cur_uid, apikey: cur_apikey })
+    .done(function(data) {
+      //console.log(data);
       if (data['status'] == 200) {
-        update_index_table(data['data']);
+        update_query_table(data['data']);
       } else {
         toastr.error('Failed to get index list:'+data['reason']);
       }
@@ -96,5 +141,6 @@ $(document).ready(function() {
   };
 
   get_index_list();
+  get_query_list();
   reg_post();
 });

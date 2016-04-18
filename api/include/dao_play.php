@@ -3,9 +3,13 @@ require_once "dao.php";
 
 class DAOPlay extends DAO {
     const SQL_ADD_MODEL = "INSERT INTO models (uid, mname, mpara, mnotes, mbody, submitted_dt, last_modified_dt) VALUES(:uid, :mname, :mpara, :mnotes, :mbody, :submitted_dt, :last_modified_dt)";
+    const SQL_UPDATE_MODEL = "UPDATE models SET mname=:mname, mpara=:mpara, mnotes=:mnotes, mbody=:mbody, last_modified_dt=:last_modified_dt WHERE mid=:mid";
     const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
     const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
-    const SQL_GET_INDEX_LIST = "SELECT * FROM index";
+    const SQL_GET_INDEX_LIST = "SELECT * FROM index_paths";
+    const SQL_GET_INDEX_DETAIL = "SELECT * FROM index_paths WHERE id=:id LIMIT 1";
+    const SQL_GET_QUERY_LIST = "SELECT * FROM query_paths";
+    const SQL_GET_QUERY_DETAIL = "SELECT * FROM query_paths WHERE query_tag=:query_tag LIMIT 1";
 
     private static $column_lookup = [
         "0" => "uid",
@@ -27,20 +31,24 @@ class DAOPlay extends DAO {
         }
     }
 
-    public function add_model($uid, $apikey, $mname, $mpara, $mnotes, $mbody) {
+    public function add_update_model($uid, $apikey, $mid, $mname, $mpara, $mnotes, $mbody) {
         $this->validate_user($uid, $apikey);
         try {
             global $db;
-            $stmt = $db->prepare(self::SQL_ADD_MODEL);
-            $stmt->execute(array(
-                ':uid' => $uid,
-                ':mname' => $mname,
-                ':mpara' => $mpara,
-                ':mnotes' => $mnotes,
-                ':mbody' => $mbody,
-                ':submitted_dt' => gmdate('Y-m-d H:i:s'),
-                ':last_modified_dt' => gmdate('Y-m-d H:i:s'),
-            ));
+            if (empty($mid)) {
+                $stmt = $db->prepare(self::SQL_ADD_MODEL);
+                $stmt->bindValue(':uid', $uid, PDO::PARAM_STR);
+                $stmt->bindValue(':submitted_dt', gmdate('Y-m-d H:i:s'), PDO::PARAM_STR);
+            } else {
+                $stmt = $db->prepare(self::SQL_UPDATE_MODEL);
+                $stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':mname', $mname, PDO::PARAM_STR);
+            $stmt->bindValue(':mpara', $mpara, PDO::PARAM_STR);
+            $stmt->bindValue(':mnotes', $mnotes, PDO::PARAM_STR);
+            $stmt->bindValue(':mbody', $mbody, PDO::PARAM_STR);
+            $stmt->bindValue(':last_modified_dt', gmdate('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $stmt->execute();
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
         }
@@ -112,6 +120,47 @@ class DAOPlay extends DAO {
             $stmt = $db->prepare(self::SQL_GET_INDEX_LIST);
             $stmt->execute();
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+    public function get_index_details($uid, $apikey, $iid) {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_INDEX_DETAIL);
+            $stmt->bindValue(':id', $iid, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+    public function get_query_list($uid, $apikey) {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_QUERY_LIST);
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+    public function get_query_details($uid, $apikey, $query_tag) {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_QUERY_DETAIL);
+            $stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row;
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);

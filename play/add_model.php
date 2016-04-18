@@ -40,7 +40,7 @@ require_once "template.php";
         <!-- Tab panes -->
         <div class="tab-content main-content">
           <div role="tabpanel" class="tab-pane fade in active" id="form">
-            <form role="form" id="fform" method="POST" action="/api/play/add_model.php" autocomplete="off">
+            <form role="form" id="fform" method="POST" action="/api/play/add_update_model.php" autocomplete="off">
               <div class="form-group">
                 <label for="mname">Model Name</label>
                 <input type="text" name="mname" class="form-control" id="mname" placeholder="Model Name">
