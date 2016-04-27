@@ -10,6 +10,9 @@ lamp:
     - STARTUP_SQL=/mysql_backup/rires.sql
     - CODE_PATH=/home/ypeilin/Dropbox/code/RIRES/
     - CRON_JOBS=/cronjobs/cronjobs
+    - QUERY_PATH=/home/ypeilin/Documents/queries/
+    - INDEX_PATH=/home/ypeilin/Documents/index/
+    - JUDGEMENT_PATH=/home/ypeilin/Documents/judgements/
   volumes:
     # Server files
     - /home/ypeilin/Dropbox/code/RIRES/:/var/www/rires/public_html/

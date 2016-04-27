@@ -28,6 +28,36 @@ function reg_post() {
   });
 }
 
+function reg_evaluate() {
+  $('#evaluate_btn').on('click', function (e) {
+    e.preventDefault();
+    $(this).prepend('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>');
+    $(this).prop("disabled", true);
+
+    $('input#uid').val($('#cur_uid').html());
+    $('input#apikey').val($('#cur_apikey').html());
+    $.post($('#fform').attr('action'), $('#fform').serialize(), function() {})
+      .done(function(data) {
+        //console.log(data);
+        if (data['status'] == 200) {
+          toastr.success('Successfully added index!');
+          setTimeout(function() {
+            window.location.href = '/admin/add_index_path.php';
+          }, 500);
+        } else {
+          toastr.error('Failed to add index:'+data['reason']);
+        }
+      })
+      .fail(function() {
+        toastr.error('Failed to add index for unknown reason!');
+      })
+      .always(function() {
+        $('#submit_index').find("i").remove();
+        $('#submit_index').prop("disabled", false);
+      }, "json");
+  });
+}
+
 function update_index_table(data) {
   if (data.length == 0) {
     $("#index-list-table").hide();

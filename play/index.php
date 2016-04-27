@@ -30,6 +30,9 @@ require_once "template.php";
       <button id="btn-menu-toggle" type="button" data-toggle="offcanvas" data-target="#myNavmenu">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
+      <div>
+       <p class="text-primary">Click on the table entry to <strong>Update the Model, See the Compile Status, Evaluate the Model and Check the Results</strong></p>
+      </div>
       <table id="model-list-table" class="table table-striped table-hover sortable">
         <thead>
           <tr>  

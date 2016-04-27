@@ -8,7 +8,8 @@ $result = $dao_admin->add_update_index(
     $util->getFromPost($_POST, "iid"),
     $util->getFromPost($_POST, "name"), 
     $_POST["index_path"],
-    $_POST["notes"]
+    $_POST["notes"],
+    $_POST["index_stats"]
 );  
 echo json_encode(array("status" => 200, "data" => $result));
 ?>

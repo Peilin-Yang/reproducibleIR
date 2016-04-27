@@ -4,8 +4,8 @@ require_once "dao.php";
 class DAOAdmin extends DAO {
     const SQL_UPDATE_INFO = "INSERT INTO info (name, content) VALUES(:name, :content) ON DUPLICATE KEY UPDATE name=:name, content=:content";
     const SQL_GET_INFO = "SELECT content FROM info WHERE name=:name";
-    const SQL_ADD_INDEX = "INSERT INTO index_paths (uid, iname, path, notes, add_dt) VALUES(:uid, :name, :path, :notes, :add_dt)";
-    const SQL_UPDATE_INDEX = "UPDATE index_paths SET uid=:uid, iname=:name, path=:path, notes=:notes, add_dt=:add_dt WHERE id=:id";
+    const SQL_ADD_INDEX = "INSERT INTO index_paths (uid, iname, path, notes, stats, add_dt) VALUES(:uid, :name, :path, :notes, :stats, :add_dt)";
+    const SQL_UPDATE_INDEX = "UPDATE index_paths SET uid=:uid, iname=:name, path=:path, notes=:notes, stats=:stats, add_dt=:add_dt WHERE id=:id";
     const SQL_ADD_QUERY = "INSERT INTO query_paths (uid, index_id, name, query_path, evaluation_path, notes, add_dt) VALUES(:uid, :index_id, :name, :query_path, :evaluation_path, :notes, :add_dt)";
     const SQL_UPDATE_QUERY = "UPDATE query_paths SET uid=:uid, index_id=:index_id, name=:name, query_path=:query_path, evaluation_path=:evaluation_path, notes=:notes, add_dt=:add_dt WHERE query_tag=:query_tag";
     
@@ -48,7 +48,7 @@ class DAOAdmin extends DAO {
     }
 
     public function add_update_index($uid, $apikey, $iid, 
-            $name, $path, $notes) {
+            $name, $path, $notes, $stats) {
         $this->validate_admin($uid, $apikey);
         try {
             global $db;
@@ -62,6 +62,7 @@ class DAOAdmin extends DAO {
             $stmt->bindValue(':name', $name, PDO::PARAM_STR);
             $stmt->bindValue(':path', $path, PDO::PARAM_STR);
             $stmt->bindValue(':notes', $notes, PDO::PARAM_STR);
+            $stmt->bindValue(':stats', $stats, PDO::PARAM_STR);
             $stmt->bindValue(':add_dt', gmdate('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->execute();
         } catch( PDOException $Exception ) {

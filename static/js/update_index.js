@@ -33,6 +33,7 @@ function fillin_form(data) {
   $("input#name").val(data['iname']);
   $("#index_path").val(data['path']);
   $("input#notes").val(data['notes']);
+  $("#index_stats").val(data['stats']);
 }
 
 function get_index_details() {

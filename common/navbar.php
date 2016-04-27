@@ -1,3 +1,6 @@
+<?php
+require_once $_SERVER["DOCUMENT_ROOT"]."/includes/config.php";
+?>
 
 <nav class="navbar navbar-inverse navbar-static-top">
   <div class="container">
@@ -8,11 +11,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php SITE ?>"><?php SITENAME ?></a>
+      <a class="navbar-brand" href="<?php echo SITE; ?>"><?php echo SITENAME; ?></a>
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="guide" data-toggle="modal" data-target="#guideModal">ASDF</a></li>
+        <li><a href="#">Comparisons</a></li>
         <?php 
           if( $user->is_logged_in() ) { 
             $username = $_SESSION['username'];
@@ -46,23 +49,3 @@
     </div>
   </div>
 </nav>
-
-<div class="modal fade" id="guideModal" tabindex="-1" role="dialog" aria-labelledby="guideModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="guideModalLabel">Judgement Guide</h4>
-      </div>
-      <div class="modal-body">
-        <h4>Summary Generation Comparison</h4>
-
-        <p>Please choose the better summary no matter whatever reason is.</p>
-
-        <hr/>
-
-        <h3>Thank you for your generous help!</h3>
-      </div>
-    </div>
-  </div>
-</div>

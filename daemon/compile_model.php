@@ -1,5 +1,6 @@
 <?php
 require_once "/var/www/".getenv("SITENAME")."/public_html/includes/config.php";
+require_once "/var/www/".getenv("SITENAME")."/public_html/api/include/ruleexception.php";
 
 class Deamon {
     const SQL_FETCH_ONE_MODEL = "SELECT * FROM models WHERE compile_status=-1 ORDER BY last_modified_dt ASC LIMIT 10";

@@ -53,7 +53,7 @@ require_once "template.php";
               <div class="form-group">
                 <label for="mnotes">Model Notes</label>
                 <p class="help-block">You can leave some notes about the model. You can use text between two dollar signs to add math equations.</p>
-                <input type="text" name="mnotes" class="form-control" id="mnotes" placeholder="Model Notes">
+                <textarea name="mnotes" class="form-control" id="mnotes" rows="5" placeholder="Model Notes: original authors, publish year, etc."></textarea>
               </div>
               <div class="form-group">
                 <label for="mbody">Model Implementation</label>

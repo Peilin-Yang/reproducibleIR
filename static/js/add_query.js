@@ -112,11 +112,11 @@ function get_query_list() {
       if (data['status'] == 200) {
         update_query_table(data['data']);
       } else {
-        toastr.error('Failed to get index list:'+data['reason']);
+        toastr.error('Failed to get query list:'+data['reason']);
       }
     })
     .fail(function() {
-        toastr.error('Failed to get index list for unknown reason!');
+        toastr.error('Failed to get query list for unknown reason!');
     })
     .always(function() {
       $.unblockUI();

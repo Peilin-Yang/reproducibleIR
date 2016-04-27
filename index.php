@@ -13,12 +13,16 @@
   </div>
   <div class="jumbotron">
     <div class="container">
-      <h1>Welcome Aboard!</h1>
+      <h2>Welcome Aboard!</h2>
       <p>
       Reproducible Information Retrieval Evaluation System (<strong>RIRES</strong>) 
       aims to help researchers and students to quickly and easily implement ranking 
       models with small pieces of codes.
-
+      </p>
+      <p>
+      The codes are automatically compiled after submission. Users can select query 
+      sets to evaluate against upon the successful compilation. The performances are 
+      automatically generated and can be compared.
       </p>
     </div>
   </div>

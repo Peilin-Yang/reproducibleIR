@@ -37,7 +37,11 @@ require_once "template.php";
         </div>
         <div class="form-group">
           <label for="index_path">Index Path</label>
-          <textarea name="index_path" id="index_path" class="form-control" rows="5"></textarea>
+          <textarea name="index_path" id="index_path" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="index_stats">Add Index Statistics</label>
+          <textarea name="index_stats" id="index_stats" class="form-control" rows="6"></textarea>
         </div>
         <input type="hidden" name="uid" id="uid">
         <input type="hidden" name="apikey" id="apikey">
