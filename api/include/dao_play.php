@@ -13,8 +13,10 @@ class DAOPlay extends DAO {
     const SQL_GET_INDEX_LIST = "SELECT * FROM index_paths";
     const SQL_GET_INDEX_DETAIL = "SELECT * FROM index_paths WHERE id=:id LIMIT 1";
     const SQL_GET_QUERY_LIST = "SELECT * FROM query_paths";
-    const SQL_GET_QUERY_LIST_FULL = "SELECT q.query_tag, q.name, q.notes as qnotes, i.iname, i.notes as inotes, i.stats, e.evaluate_status FROM query_paths as q, index_paths as i, evaluation as e WHERE q.index_id=i.id and e.mid=:mid and e.query_tag=q.query_tag";
+    const SQL_GET_QUERY_LIST_FULL = "SELECT q.query_tag, q.name, q.notes as qnotes, i.iname, i.notes as inotes, i.stats FROM query_paths as q, index_paths as i WHERE q.index_id=i.id";
+    const SQL_GET_QUERY_LIST_FULL2 = "SELECT evaluate_status FROM evaluation WHERE mid=:mid and query_tag=:query_tag";
     const SQL_GET_QUERY_DETAIL = "SELECT * FROM query_paths WHERE query_tag=:query_tag LIMIT 1";
+    const SQL_GET_EVALUATION_BY_QUERY = "SELECT m.mname, m.mpara, m.mnotes, e.performances FROM models as m, evaluation as e WHERE e.query_tag=:query_tag and e.evaluate_status=0 and e.mid=m.mid";
 
     private static $column_lookup = [
         "0" => "uid",
@@ -198,15 +200,34 @@ class DAOPlay extends DAO {
         }
     }
 
+    public function get_query_list_nouser() {
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_QUERY_LIST_FULL);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
     public function get_query_list_full($uid, $apikey, $mid) {
         $this->validate_user($uid, $apikey);
         try {
             global $db;
             $stmt = $db->prepare(self::SQL_GET_QUERY_LIST_FULL);
-            $stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
             $stmt->execute();
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $row;
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows as &$value) {
+                $st = $db->prepare(self::SQL_GET_QUERY_LIST_FULL2);
+                $st->bindValue(':mid', $mid, PDO::PARAM_STR);
+                $st->bindValue(':query_tag', $value['query_tag'], PDO::PARAM_STR);
+                $st->execute();
+                $row = $st->fetch(PDO::FETCH_ASSOC);
+                $value['evaluate_status'] = $row['evaluate_status'];
+            }
+            return $rows;
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
         }
@@ -221,6 +242,22 @@ class DAOPlay extends DAO {
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
+    }
+
+    /*
+    * do not need the user's log in
+    */
+    public function get_evaluations_of_querytag($query_tag) {
+        try {
+            global $db;
+            $stmt = $db->prepare(self::SQL_GET_EVALUATION_BY_QUERY);
+            $stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $rows;
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
         }

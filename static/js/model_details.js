@@ -207,7 +207,7 @@ function fill_query_info(data) {
       "%INDEX_NOTES%": obj.inotes,
       "%INDEX_STATS%": obj.stats
     };
-    console.log(replacements);
+    // console.log(replacements);
     stats[i+1] = obj.stats;
     var tmp = '<br> \
       <div class="row"> \

@@ -15,7 +15,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/includes/config.php";
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Comparisons</a></li>
+        <li><a href="/play/comparison.php">Comparisons</a></li>
         <?php 
           if( $user->is_logged_in() ) { 
             $username = $_SESSION['username'];
