@@ -36,7 +36,15 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/includes/config.php";
       <select id="query_select" class="form-control">
         
       </select>
-      <div id="query_info"> </div>
+      <div id="query_info"> 
+        <ul>
+          <li id="query_name"> </li>
+          <li id="query_des"> </li>
+          <li id="index_name"> </li>
+          <li id="index_des"> </li>
+          <li id="index_stats"> </li>
+        </ul>
+      </div>
       <div id="draw"> </div>
     </div>
   </div>
@@ -45,7 +53,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/includes/config.php";
 </footer>
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
-<script type="text/javascript" src="//code.highcharts.com/highcharts.js.js"></script>
+<script type="text/javascript" src="//code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/static/js/comparison.js"></script>
 </body>
 </html>

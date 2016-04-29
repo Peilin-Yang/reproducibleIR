@@ -144,6 +144,8 @@ $(document).ready(function() {
     "hideMethod": "fadeOut"
   };
   reg_toggle_menu();
+  isPreviousLoadComplete = true; 
+  isMoreDataAvailable = true;
   reg_scroll_callback();
   async_get_data(0, "desc", 1, 30);
   // for more data
