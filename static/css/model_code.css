@@ -1,0 +1,13 @@
+.entity_heading {
+    font-family: 'Open Sans', "Microsoft YaHei";
+    font-size: 14px;
+    color: #9da7b8;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9eaed;
+    font-weight: 700; 
+}
+.entity_body {
+    font-family: 'Bebas Neue Regular', "Microsoft YaHei", 'Open Sans';
+    font-size: 14px;
+    font-weight: bold; 
+}
