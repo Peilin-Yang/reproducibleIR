@@ -15,7 +15,7 @@
     <div class="container">
       <h2>Welcome Aboard!</h2>
       <p>
-      Reproducible Information Retrieval Evaluation System (<strong>RIRES</strong>) 
+      Reproducible Information retrieval System Evaluation (<strong>RISE</strong>) 
       aims to help researchers and students to quickly and easily implement ranking 
       models with small pieces of codes.
       </p>

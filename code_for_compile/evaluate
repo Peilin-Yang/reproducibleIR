@@ -1,0 +1,26 @@
+#include "indri/TermScoreFunction.hpp"
+#include <cmath>
+
+
+void indri::query::TermScoreFunction::_preCompute() {
+  _modelParas["c"] = 1.0;
+  _modelParas["lambda"] = _documentOccurrences / _documentCount;
+  _modelParas["avgDocLength"] = _collectionSize / double(_documentCount);
+}
+
+indri::query::TermScoreFunction::TermScoreFunction( double collectionOccurence, double collectionSize, double documentOccurrences, double documentCount, double queryLength, std::map<std::string, double>& paras ) {
+  _collectionOccurence = collectionOccurence;
+  _collectionSize = collectionSize;
+  _documentOccurrences = documentOccurrences;
+  _documentCount = documentCount;
+  _modelParas = paras;
+  _preCompute();
+}
+
+
+double indri::query::TermScoreFunction::scoreOccurrence( double tf, int dl, double qtf, double docUniqueTerms ) {
+  if (tf - 0.0 < 1e-6) return 0;
+  double tdw = tf * log(1 + _modelParas["c"]*_modelParas["avgDocLength"]/dl);
+  double score = log( (tdw + _modelParas["lambda"]) / _modelParas["lambda"] );
+  return qtf * score;
+}

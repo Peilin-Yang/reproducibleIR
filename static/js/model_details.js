@@ -151,9 +151,9 @@ function reg_confirm_evaluate() {
 }
 
 function fillin_form(data) {
-  $("input#mname").val(data['mname']);
-  $("input#mpara").val(data['mpara']);
-  $("input#mnotes").val(data['mnotes']);
+  $("#mname").val(data['mname']);
+  $("#mpara").val(data['mpara']);
+  $("#mnotes").val(data['mnotes']);
   var $editor = $('#editor');
   //console.log($editor);
   g_editor.setValue(data['mbody']);
@@ -311,7 +311,7 @@ function get_model_details() {
       }
     })
     .fail(function() {
-      toastr.error('Failed to add get model evaluation details for unknown reasons!');
+      toastr.error('Failed to add get model details for unknown reasons!');
     })
     .always(function() {
       $.unblockUI();

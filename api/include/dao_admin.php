@@ -34,7 +34,11 @@ class DAOAdmin extends DAO {
     }
 
     public function get_info($uid, $apikey, $name) {
-        $this->validate_admin($uid, $apikey);
+        if ($name === "code_instruction") {
+            $this->verify_user($uid, $apikey);
+        } else {
+            $this->validate_admin($uid, $apikey);
+        }
         try {
             global $db;
             $stmt = $db->prepare(self::SQL_GET_INFO);

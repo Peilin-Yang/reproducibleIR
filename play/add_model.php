@@ -17,11 +17,12 @@ require_once "template.php";
 	<div style="display:none;">
 	  <p id="cur_uid"><?php echo $_SESSION['uid']; ?></p>
     <p id="cur_apikey"><?php echo $_SESSION['apikey']; ?></p>
+    <p id="cur_copyfrom"><?php echo $_GET['copyfrom']; ?></p>
 	</div>
 
 <div class="container">
   <h2><strong>My Account</strong></h2>
-
+  
   <div class="row">
     <div id="myNavmenu" class="col-sm-3 col-md-3 col-lg-3 offcanvas">
       <ul class="nav nav-pills nav-stacked">

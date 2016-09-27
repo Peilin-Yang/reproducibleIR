@@ -15,7 +15,7 @@ define('DBNAME','rires');
 define('FILEDIR', '/');
 define('SITE','http://rires.info:8080/index.php');
 define('DIR','http://rires.info:8080/login/');
-define('SITENAME','Reproducible Information Retrieval');
+define('SITENAME','RISE');
 define('FromEmail','info@ReproducibleIR.org');
 define('ReplyEmail','noreply@ReproducibleIR.org');
 

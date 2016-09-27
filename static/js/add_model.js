@@ -90,6 +90,42 @@ function reg_post() {
   });
 }
 
+function copy_model(model_data) {
+  $("#mname").val(model_data['mname']);
+  $("#mpara").val(model_data['mpara']);
+  $("#mnotes").val(model_data['mnotes']);
+  g_editor.setValue(model_data['mbody']);  
+}
+
+function get_function_implementation(_mid) {
+  $.blockUI({ message: "getting other model..." });
+  var cur_uid = $("#cur_uid").text();
+  var cur_apikey = $("#cur_apikey").text();
+  $.getJSON('/api/play/get_model_details.php', { uid: cur_uid, apikey: cur_apikey, mid: _mid })
+    .done(function(data) {
+      //console.log(data);
+      if (data['status'] == 200) {
+        copy_model(data['data']);
+      } else {
+        toastr.error('Failed to get other model:'+data['reason']);
+      }
+    })
+    .fail(function() {
+      toastr.error('Failed to get other model for unknown reasons!');
+    })
+    .always(function() {
+      $.unblockUI();
+      $('p#waiting-span').hide();
+  });
+}
+
+function copyfrom() {
+  var copyfrom_mid = $('#cur_copyfrom').html();
+  if (copyfrom_mid!=="") {
+    get_function_implementation(copyfrom_mid);
+  }
+}
+
 $(document).ready(function() {
   toastr.options = {
     "closeButton": true,
@@ -112,6 +148,7 @@ $(document).ready(function() {
   init_mathjax();
   get_instruction();
   reg_post();
+  copyfrom();
 
   $('#editor').height($(window).height()*0.6);
 });

@@ -7,6 +7,7 @@ class DAOPlay extends DAO {
     const SQL_FIND_EVALUATE = "SELECT * FROM evaluation WHERE mid=:mid and query_tag=:query_tag";
     const SQL_ADD_EVALUATE = "INSERT INTO evaluation (mid, query_tag, submitted_dt) VALUES(:mid, :query_tag, :submitted_dt)";
     const SQL_UPDATE_EVALUATE = "UPDATE evaluation SET submitted_dt=:submitted_dt, evaluate_status=-1 WHERE mid=:mid and query_tag=:query_tag";
+    const SQL_GET_ALL_MODELS_LIST = 'SELECT m.mid,CONCAT(u.firstname,CONCAT(" ", u.lastname)) AS user,m.mname,m.mpara,m.last_modified_dt FROM models m, users u WHERE m.compile_status=0 AND u.uid=m.uid';
     const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
     const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
     const SQL_GET_MODEL_EVALUATION_DETAIL = "SELECT e.id, e.evaluated_dt, e.evaluate_status, e.evaluate_msg, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag";
@@ -92,6 +93,37 @@ class DAOPlay extends DAO {
             return static::$column_lookup[$field];
         }
         return static::$column_lookup["0"]; 
+    }
+
+
+    public function get_all_models_list($uid, $apikey, 
+            $start = "0", $end = "-1") {
+        $this->validate_user($uid, $apikey);
+        try {
+            global $db;
+            $sql_qry = self::SQL_GET_ALL_MODELS_LIST;
+            $sql_qry .= " order by m.mname asc";
+            if (ctype_digit($start) && ctype_digit($end)) {
+                // limit clause is zero-based
+                $offset = max(intval($start)-1, 0);
+                if (intval($end) >= 0) {
+                    $count = max(intval($end)-intval($start)+1, 0);
+                } else {
+                    $count = 999999;
+                }
+                $sql_qry .= " limit $offset, $count";
+            }
+            $stmt = $db->prepare($sql_qry);
+            if (!empty($request_uid)) {
+                $stmt->bindValue(':uid', $request_uid, PDO::PARAM_STR);
+            }
+            //var_dump($sql_qry);
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $row;
+        } catch( PDOException $Exception ) {
+            throw new RuleException($Exception->getMessage(), 401);
+        }
     }
 
     public function get_model_list($uid, $apikey, $request_uid, 
