@@ -1,8 +1,8 @@
 SITENAME=rires
-CODE_PATH=/home/ypeilin/Dropbox/code/RIRES/
-QUERY_PATH=/home/ypeilin/Documents/queries/
-INDEX_PATH=/home/ypeilin/Documents/index/
-JUDGEMENT_PATH=/home/ypeilin/Documents/judgements/
+CODE_PATH=/var/www/reproducibleIR/
+QUERY_PATH=/var/www/rise_files/queries/
+INDEX_PATH=/var/www/rise_files/index/
+JUDGEMENT_PATH=/var/www/rise_files/judgements/
 * * * * * root /usr/bin/php /var/www/rires/public_html/daemon/compile_model.php >> /var/log/cronjobs.log 2>&1
 * * * * * root /usr/bin/php /var/www/rires/public_html/daemon/evaluate_model.php >> /var/log/cronjobs.log 2>&1
 # An empty line is required at the end of this file for a valid cron file.
