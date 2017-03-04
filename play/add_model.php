@@ -83,11 +83,11 @@ require_once "template.php";
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
 <script type="text/javascript" src="/static/js/marked.js"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/play.js"></script>
 <script type="text/javascript" src="/static/js/add_model.js"></script>

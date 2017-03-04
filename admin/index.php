@@ -57,6 +57,6 @@ require_once "template.php";
 <script src="/static/js/marked.js"></script>
 <!-- <script src="/static/js/markdown.min.js"></script> -->
 <script src="/static/js/to-markdown.js"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
