@@ -2,7 +2,7 @@ lamp:
   image: yangpeilyn/lamp:basic
   container_name: web
   ports:
-    - 8080:80
+    - 8081:80
   environment:
     - ON_CREATE_DB=rires
     - SITENAME=rires

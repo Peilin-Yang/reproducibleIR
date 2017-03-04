@@ -13,8 +13,8 @@ define('DBNAME','rires');
 
 //application address
 define('FILEDIR', '/');
-define('SITE','https://rise.eecis.udel.edu:8080/index.php');
-define('DIR','https://rise.eecis.udel.edu:8080/login/');
+define('SITE','rires.info/index.php');
+define('DIR','rires.info/login/');
 define('SITENAME','RISE');
 define('FromEmail','info@ReproducibleIR.org');
 define('ReplyEmail','noreply@ReproducibleIR.org');
