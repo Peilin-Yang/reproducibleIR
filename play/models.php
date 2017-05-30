@@ -60,7 +60,7 @@ require_once "template.php";
 </footer>
 
 <?php require_once ($_SERVER["DOCUMENT_ROOT"]."/common/common_footer.php"); ?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 <script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/play.js"></script>
 <script type="text/javascript" src="/static/js/models.js"></script>
