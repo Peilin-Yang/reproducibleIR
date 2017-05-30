@@ -87,7 +87,7 @@ require_once "template.php";
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
 <script type="text/javascript" src="/static/js/marked.js"></script>
-<script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script type="text/javascript" src="/static/js/jasny-bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/play.js"></script>
 <script type="text/javascript" src="/static/js/add_model.js"></script>
