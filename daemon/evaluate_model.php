@@ -98,11 +98,14 @@ class Deamon {
                 $index_path = $row['path'];
                 $query_path = $row['query_path'];
                 $judgement_path = $row['evaluation_path'];
+                $pertube_type = $row['pertube_type'];
+                $pertube_paras_str = $row['pertube_paras_str'];
                 $status_code;
                 $status_msg;
                 $performances_str;
                 $this->evaluate_using_docker($model_body, $index_path, $query_path, 
-                    $judgement_path, $status_code, $status_msg, $performances_str);
+                    $judgement_path, $pertube_type, $pertube_paras_str,
+                    $status_code, $status_msg, $performances_str);
                 //var_dump($status_code);
                 //var_dump($status_msg);
                 $this->update_evaluation_status(
