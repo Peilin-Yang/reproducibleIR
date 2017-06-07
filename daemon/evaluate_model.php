@@ -34,13 +34,14 @@ class Deamon {
     }
 
     private function evaluate_using_docker($code_text, $index_path, $query_path, 
-                    $judgement_path, &$return_code, &$err_msg, &$output) {
+                    $judgement_path, $pertube_type, $pertube_paras_str, 
+                    &$return_code, &$err_msg, &$output) {
         if (!file_exists($this->_compile_workingdir)) {
             mkdir($this->_compile_workingdir, $recursive=true);
         }
         chdir($this->_compile_workingdir);
         file_put_contents($this->_compile_fn, $code_text);
-        $command = $this->_evaluate_docker_cmd." ".$this->_compile_fn." ".$index_path." ".$query_path." ".$judgement_path;
+        $command = $this->_evaluate_docker_cmd." ".$this->_compile_fn." ".$index_path." ".$query_path." ".$judgement_path." ".$pertube_type." ".$pertube_paras_str;
         $descriptorspec = array(
            0 => array("pipe", "r"),  // stdin
            1 => array("pipe", "w"),  // stdout
