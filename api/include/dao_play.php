@@ -5,12 +5,12 @@ class DAOPlay extends DAO {
     const SQL_ADD_MODEL = "INSERT INTO models (uid, mname, mpara, mnotes, mbody, submitted_dt, last_modified_dt, compile_status) VALUES(:uid, :mname, :mpara, :mnotes, :mbody, :submitted_dt, :last_modified_dt, :compile_status)";
     const SQL_UPDATE_MODEL = "UPDATE models SET mname=:mname, mpara=:mpara, mnotes=:mnotes, mbody=:mbody, last_modified_dt=:last_modified_dt, compile_status=:compile_status WHERE mid=:mid";
     const SQL_FIND_EVALUATE = "SELECT * FROM evaluation WHERE mid=:mid and query_tag=:query_tag";
-    const SQL_ADD_EVALUATE = "INSERT INTO evaluation (mid, query_tag, submitted_dt) VALUES(:mid, :query_tag, :submitted_dt)";
+    const SQL_ADD_EVALUATE = "INSERT INTO evaluation (mid, query_tag, pertube_type, pertube_paras_str, submitted_dt) VALUES(:mid, :query_tag, :pertube_type, :pertube_paras_str, :submitted_dt)";
     const SQL_UPDATE_EVALUATE = "UPDATE evaluation SET submitted_dt=:submitted_dt, evaluate_status=-1 WHERE mid=:mid and query_tag=:query_tag";
     const SQL_GET_ALL_MODELS_LIST = 'SELECT m.mid,CONCAT(u.firstname,CONCAT(" ", u.lastname)) AS user,m.mname,m.mpara,m.last_modified_dt FROM models m, users u WHERE m.compile_status=0 AND u.uid=m.uid';
     const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
     const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
-    const SQL_GET_MODEL_EVALUATION_DETAIL = "SELECT e.id, e.evaluated_dt, e.evaluate_status, e.evaluate_msg, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag";
+    const SQL_GET_MODEL_EVALUATION_DETAIL = "SELECT e.id, e.pertube_type, e.evaluated_dt, e.evaluate_status, e.evaluate_msg, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag and e.pertube_type=:pertube_type";
     const SQL_GET_INDEX_LIST = "SELECT * FROM index_paths";
     const SQL_GET_INDEX_DETAIL = "SELECT * FROM index_paths WHERE id=:id LIMIT 1";
     const SQL_GET_QUERY_LIST = "SELECT * FROM query_paths";
@@ -63,7 +63,8 @@ class DAOPlay extends DAO {
         }
     }
 
-    public function evaluate_model($uid, $apikey, $mid, $query_list_str) {
+    public function evaluate_model($uid, $apikey, $mid, $query_list_str, 
+            $pertube_type, $pertube_paras_str) {
         $this->validate_user($uid, $apikey);
         $query_list = explode(",", $query_list_str);
         foreach ($query_list as $query_tag) {
@@ -75,6 +76,8 @@ class DAOPlay extends DAO {
                 $find_stmt->execute();
                 if ($find_stmt->rowCount() == 0) {
                     $stmt = $db->prepare(self::SQL_ADD_EVALUATE);
+                    $stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
+                    $stmt->bindValue(':pertube_paras_str', $pertube_paras_str, PDO::PARAM_STR);
                 } else {
                     $stmt = $db->prepare(self::SQL_UPDATE_EVALUATE);
                 }
@@ -177,12 +180,13 @@ class DAOPlay extends DAO {
         }
     }
 
-    public function get_model_evaluation_details($uid, $apikey, $mid) {
+    public function get_model_evaluation_details($uid, $apikey, $mid, $pertube_type) {
         $this->validate_user($uid, $apikey);
         try {
             global $db;
             $stmt = $db->prepare(self::SQL_GET_MODEL_EVALUATION_DETAIL);
             $stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
+            $stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
             $stmt->execute();
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $rows;

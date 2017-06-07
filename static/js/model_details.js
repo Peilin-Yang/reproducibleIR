@@ -126,7 +126,9 @@ function reg_confirm_evaluate() {
         uid: cur_uid, 
         apikey: cur_apikey, 
         mid: model_id,
-        query_list: query_list
+        query_list: query_list,
+        pertube_type: 0, 
+        pertube_paras_str: ""
       })
       .done(function(data) {
         //console.log(data);
@@ -325,7 +327,7 @@ function get_model_evaluation_details() {
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
   var cur_model_id = $("#cur_mid").text();
-  $.getJSON('/api/play/get_model_evaluation_details.php', { uid: cur_uid, apikey: cur_apikey, mid: cur_model_id })
+  $.getJSON('/api/play/get_model_evaluation_details.php', { uid: cur_uid, apikey: cur_apikey, mid: cur_model_id, pertube_type: 0 })
     .done(function(data) {
       //console.log(data);
       if (data['status'] == 200) {
