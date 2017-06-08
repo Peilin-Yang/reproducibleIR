@@ -47,6 +47,7 @@ class Deamon {
            1 => array("pipe", "w"),  // stdout
            2 => array("pipe", "w"),  // stderr
         );
+        echo($command);
         $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);
         $status = proc_get_status($process);
         while ($status["running"]) {
