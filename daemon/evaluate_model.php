@@ -6,7 +6,7 @@ class Deamon {
     const SQL_FETCH_EVALUATION = "SELECT * FROM evaluation WHERE evaluate_status=-1 ORDER BY submitted_dt ASC LIMIT 1";
     const SQL_SET_TEMP_INFO = "UPDATE evaluation SET evaluate_status=-2 WHERE id=:id";
     const SQL_UPDATE_EVALUATION_ENTRY = "UPDATE evaluation SET evaluated_dt=:evaluated_dt, evaluate_status=:evaluate_status, evaluate_msg=:evaluate_msg, performances=:performances WHERE id=:id";
-    const SQL_GET_INFO = "SELECT m.mbody, q.query_path, q.evaluation_path, i.path FROM models as m, evaluation as e, index_paths as i, query_paths as q WHERE e.id = :evaluation_id and e.mid = m.mid and e.query_tag=q.query_tag and q.index_id=i.id";
+    const SQL_GET_INFO = "SELECT m.mbody, q.query_path, q.evaluation_path, i.path, e.pertube_type, e.pertube_paras_str FROM models as m, evaluation as e, index_paths as i, query_paths as q WHERE e.id = :evaluation_id and e.mid = m.mid and e.query_tag=q.query_tag and q.index_id=i.id";
 
     private $_env_sitename;
     private $_code_path;
