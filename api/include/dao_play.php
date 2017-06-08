@@ -17,7 +17,7 @@ class DAOPlay extends DAO {
     const SQL_GET_QUERY_LIST_FULL = "SELECT q.query_tag, q.name, q.notes as qnotes, i.iname, i.notes as inotes, i.stats FROM query_paths as q, index_paths as i WHERE q.index_id=i.id";
     const SQL_GET_QUERY_LIST_FULL2 = "SELECT evaluate_status FROM evaluation WHERE mid=:mid and query_tag=:query_tag";
     const SQL_GET_QUERY_DETAIL = "SELECT * FROM query_paths WHERE query_tag=:query_tag LIMIT 1";
-    const SQL_GET_EVALUATION_BY_QUERY = "SELECT m.mname, m.mpara, m.mnotes, e.performances FROM models as m, evaluation as e WHERE e.query_tag=:query_tag and e.evaluate_status=0 and e.mid=m.mid";
+    const SQL_GET_EVALUATION_BY_QUERY = "SELECT m.mname, m.mpara, m.mnotes, e.performances FROM models as m, evaluation as e WHERE e.query_tag=:query_tag and e.evaluate_status=0 and e.pertube_type=0 and e.mid=m.mid";
 
     private static $column_lookup = [
         "0" => "uid",
