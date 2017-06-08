@@ -41,7 +41,7 @@ class Deamon {
         }
         chdir($this->_compile_workingdir);
         file_put_contents($this->_compile_fn, $code_text);
-        $command = $this->_evaluate_docker_cmd." ".$this->_compile_fn." ".$index_path." ".$query_path." ".$judgement_path." ".$pertube_type." ".$pertube_paras_str;
+        $command = $this->_evaluate_docker_cmd." ".$this->_compile_fn." ".$index_path." ".$query_path." ".$judgement_path." ".$pertube_type." \"".$pertube_paras_str."\"";
         $descriptorspec = array(
            0 => array("pipe", "r"),  // stdin
            1 => array("pipe", "w"),  // stdout
