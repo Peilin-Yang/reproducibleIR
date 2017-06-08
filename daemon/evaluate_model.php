@@ -95,6 +95,7 @@ class Deamon {
                 $st->bindValue(':evaluation_id', $value['id'], PDO::PARAM_STR);
                 $st->execute();
                 $row = $st->fetch(PDO::FETCH_ASSOC);
+                echo($row);
                 $model_body = $row['mbody'];
                 $index_path = $row['path'];
                 $query_path = $row['query_path'];
