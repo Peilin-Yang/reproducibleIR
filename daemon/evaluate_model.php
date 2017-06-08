@@ -47,7 +47,6 @@ class Deamon {
            1 => array("pipe", "w"),  // stdout
            2 => array("pipe", "w"),  // stderr
         );
-        echo($command);
         $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);
         $status = proc_get_status($process);
         while ($status["running"]) {
@@ -95,7 +94,6 @@ class Deamon {
                 $st->bindValue(':evaluation_id', $value['id'], PDO::PARAM_STR);
                 $st->execute();
                 $row = $st->fetch(PDO::FETCH_ASSOC);
-                echo($row);
                 $model_body = $row['mbody'];
                 $index_path = $row['path'];
                 $query_path = $row['query_path'];
