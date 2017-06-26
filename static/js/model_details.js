@@ -126,7 +126,7 @@ function reg_perturb_btn() {
   $('#pa_btn').on('click', function (e) {
     var evaluations_summary = show_perturb_analysis();
     $("#perturb-modal-body").html(evaluations_summary);
-    $('#confirmModal').modal('show'); 
+    $('#PAconfirmModal').modal('show'); 
   });
 }
 
