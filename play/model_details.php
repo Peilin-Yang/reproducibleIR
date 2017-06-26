@@ -179,7 +179,7 @@ require_once "template.php";
                     <p class="text-primary">If the model is successfully compiled then you can select one or more query set to evaluate.</p>
                     <p class="text-primary">Otherwise correct your model first:)</p>
                   </div>
-                  <div>
+                  <div class="col-sm-12 col-md-12 col-lg-12">
                     Please refer to <a href="https://www.eecis.udel.edu/~hfang/pubs/tois09.pdf">our paper</a> for details.
                   </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >
@@ -199,7 +199,7 @@ require_once "template.php";
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="PAModalLabel">Confirm?</h4>
                       </div>
-                      <div class="modal-body" id="evaluate-modal-body">
+                      <div class="modal-body" id="perturb-modal-body">
                       </div>
                       <div class="modal-footer">
                         <button type="button" id="confirm-pa" class="btn btn-success">Confirm</button>

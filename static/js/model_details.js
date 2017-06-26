@@ -109,6 +109,27 @@ function reg_evaluate_btn() {
   });
 }
 
+function show_perturb_analysis() {
+  var evaluation_list = '<ul>';
+  var option_idx = 1;
+  $.each($("#pertub_type_select option:selected"), function(i, obj1) {
+    $.each($("#pertub_coll_select option:selected"), function(j, obj2) {
+      evaluation_list += '<li>'+option_idx+'：'+obj1.text+'+'+obj2.text+'</li>';
+      option_idx++;
+    }
+  });
+  evaluation_list += '</ul>';
+  return evaluation_list;
+}
+
+function reg_perturb_btn() {
+  $('#pa_btn').on('click', function (e) {
+    var evaluations_summary = show_perturb_analysis();
+    $("#perturb-modal-body").html(evaluations_summary);
+    $('#confirmModal').modal('show'); 
+  });
+}
+
 function reg_confirm_evaluate() {
   $('#confirm-evaluate').on('click', function (e) {
     $(this).prepend('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>');
@@ -280,6 +301,7 @@ function show_status(data) {
     status_str = "Waiting For Compile";
     status_class = "compile-status compile-waiting";
     $("#evaluate_btn").attr("disabled", true);
+    $("#pa_btn").attr("disabled", true);
     $("#evaluate_select").hide();
     $("#pertub_type_select").hide();
     $("#pertub_coll_select").hide();
@@ -288,12 +310,14 @@ function show_status(data) {
     status_str = "Compile Successed";
     status_class = "compile-status compile-success";
     $("#evaluate_btn").attr("disabled", false);
+    $("#pa_btn").attr("disabled", false);
     get_queries();
   } else if (data['compile_status'] == 1) {
     status_str = "Compile Failed";
     status_class = "compile-status compile-fail";
     $("#compile_msg").addClass("alert alert-danger");
     $("#evaluate_btn").attr("disabled", true);
+    $("#pa_btn").attr("disabled", true);
     $("#evaluate_select").hide();
     $("#pertub_type_select").hide();
     $("#pertub_coll_select").hide();
@@ -428,6 +452,7 @@ $(document).ready(function() {
 
   reg_post();
   reg_evaluate_btn();
+  reg_perturb_btn();
 
   $('#editor').height($(window).height()*0.6);
 
