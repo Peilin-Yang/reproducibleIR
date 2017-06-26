@@ -162,6 +162,59 @@ require_once "template.php";
         </div>
 
         <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingPA">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePA" aria-expanded="false" aria-controls="collapsePA">
+                Perturbation Analysis
+              </a>
+            </h4>
+          </div>
+          <div id="collapsePA" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPA">
+            <div id="status-content" class="row panel-body">
+              <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="status-span">Created at:</div> <div id="submitted_dt"></div>
+                <div class="status-span">Last Modified at:</div> <div id="last_modified_dt"></div>
+                <div class="status-span">Last Compiled at:</div> <div id="last_compile_dt"></div>
+              </div>
+              
+              <div class="col-sm-6 col-md-6 col-lg-6"> 
+                <div id="compile_status"></div>
+                <div id="compile_msg"></div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p class="text-primary">If the model is successfully compiled then you can select one or more query set to evaluate.</p>
+                    <p class="text-primary">Otherwise correct your model first:)</p>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6" >
+                    <select id="pertub_type_select" multiple="multiple"></select>
+                    <select id="pertub_coll_select" multiple="multiple"></select>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6" >
+                    <button type="button" id="pa_btn" class="btn btn-primary">Run Perturbation Analysis</button>
+                  </div>
+                  <div class="modal fade" id="PAconfirmModal" tabindex="-1" role="dialog" aria-labelledby="PAModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="PAModalLabel">Confirm?</h4>
+                      </div>
+                      <div class="modal-body" id="evaluate-modal-body">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" id="confirm-pa" class="btn btn-success">Confirm</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>     
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
           <div class="panel-heading" role="tab" id="headingThree">
             <h4 class="panel-title">
               <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
