@@ -255,6 +255,8 @@ function get_queries() {
       if (data['status'] == 200) {
         update_query_multiselect(data['data']);
         $("#evaluate_select").multiselect();
+        $("#pertub_type_select").multiselect();
+        $("#pertub_coll_select").multiselect();
         reg_confirm_evaluate();
         fill_query_info(data['data']);
       } else {
