@@ -116,7 +116,7 @@ function show_perturb_analysis() {
     $.each($("#pertub_coll_select option:selected"), function(j, obj2) {
       evaluation_list += '<li>'+option_idx+'：'+obj1.text+'+'+obj2.text+'</li>';
       option_idx++;
-    }
+    });
   });
   evaluation_list += '</ul>';
   return evaluation_list;
