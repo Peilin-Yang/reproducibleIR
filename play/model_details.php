@@ -179,6 +179,9 @@ require_once "template.php";
                     <p class="text-primary">If the model is successfully compiled then you can select one or more query set to evaluate.</p>
                     <p class="text-primary">Otherwise correct your model first:)</p>
                   </div>
+                  <div>
+                    Please refer to <a href="https://www.eecis.udel.edu/~hfang/pubs/tois09.pdf">our paper</a> for details.
+                  </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >
                     <select id="pertub_type_select" multiple="multiple">
                       <option value="1">Lv1</option>
