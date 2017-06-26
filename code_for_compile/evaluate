@@ -1,11 +1,13 @@
 #include "indri/TermScoreFunction.hpp"
 #include <cmath>
 
-indri::query::TermScoreFunction::TermScoreFunction( double collectionOccurence, double collectionSize, double documentOccurrences, double documentCount, double queryLength, std::map<std::string, double>& paras ) {
+indri::query::TermScoreFunction::TermScoreFunction( double collectionOccurence, 
+    double collectionSize, double documentOccurrences, double documentCount, 
+    double avdl, double queryLength, std::map<std::string, double>& paras ) {
   _collectionOccurence = collectionOccurence;
   _collectionSize = collectionSize;
   _documentOccurrences = documentOccurrences;
-  _documentCount = documentCount;
+  _documentCount = documentCount; 
 }
 
 

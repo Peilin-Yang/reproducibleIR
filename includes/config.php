@@ -13,7 +13,7 @@ define('DBNAME','rires');
 
 //application address
 define('FILEDIR', '/');
-define('SITE','rires.info/index.php');
+define('SITE','/index.php');
 define('DIR','rires.info/login/');
 define('SITENAME','RISE');
 define('FromEmail','info@ReproducibleIR.org');
