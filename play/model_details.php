@@ -169,14 +169,8 @@ require_once "template.php";
               </a>
             </h4>
           </div>
-          <div id="collapsePA" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPA">
-            <div id="status-content" class="row panel-body">
-              <div class="col-sm-6 col-md-6 col-lg-6">
-                <div class="status-span">Created at:</div> <div id="submitted_dt"></div>
-                <div class="status-span">Last Modified at:</div> <div id="last_modified_dt"></div>
-                <div class="status-span">Last Compiled at:</div> <div id="last_compile_dt"></div>
-              </div>
-              
+          <div id="collapsePA" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPA">
+            <div id="pa-content" class="row panel-body">              
               <div class="col-sm-6 col-md-6 col-lg-6"> 
                 <div id="compile_status"></div>
                 <div id="compile_msg"></div>
@@ -186,7 +180,10 @@ require_once "template.php";
                     <p class="text-primary">Otherwise correct your model first:)</p>
                   </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >
-                    <select id="pertub_type_select" multiple="multiple"></select>
+                    <select id="pertub_type_select" multiple="multiple">
+                      <option value="1">Lv1</option>
+                      <option value="2">Lv2</option>
+                    </select>
                     <select id="pertub_coll_select" multiple="multiple"></select>
                   </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >

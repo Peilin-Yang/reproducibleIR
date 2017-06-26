@@ -177,6 +177,7 @@ function update_query_multiselect(data) {
     });
     //console.log(table_row);
     $('#evaluate_select').append(table_row);
+    $("#pertub_coll_select").append(table_row);
   });
 }
 
@@ -278,6 +279,8 @@ function show_status(data) {
     status_class = "compile-status compile-waiting";
     $("#evaluate_btn").attr("disabled", true);
     $("#evaluate_select").hide();
+    $("#pertub_type_select").hide();
+    $("#pertub_coll_select").hide();
     $("#query_info").hide();
   } else if (data['compile_status'] == 0) {
     status_str = "Compile Successed";
@@ -290,6 +293,8 @@ function show_status(data) {
     $("#compile_msg").addClass("alert alert-danger");
     $("#evaluate_btn").attr("disabled", true);
     $("#evaluate_select").hide();
+    $("#pertub_type_select").hide();
+    $("#pertub_coll_select").hide();
     $("#query_info").hide();
   } 
   $("#compile_status").text(status_str);
