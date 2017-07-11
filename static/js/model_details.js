@@ -109,6 +109,49 @@ function reg_evaluate_btn() {
   });
 }
 
+function reg_confirm_evaluate() {
+  $('#confirm-evaluate').on('click', function (e) {
+    $(this).prepend('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>');
+    $(this).prop("disabled", true);
+    var cur_uid = $("#cur_uid").text();
+    var cur_apikey = $("#cur_apikey").text();
+    var model_id = $("#cur_mid").text();
+    var evaluation_list = [];
+    $("#evaluate_select option:selected").each(function()
+    {
+      evaluation_list.push($(this).val());
+    });
+    query_list = evaluation_list.join(',');
+    $.post('/api/play/evaluate_model.php', { 
+        uid: cur_uid, 
+        apikey: cur_apikey, 
+        mid: model_id,
+        query_list: query_list,
+        pertube_type_list: 0
+      })
+      .done(function(data) {
+        //console.log(data);
+        if (data['status'] == 200) {
+          toastr.success('Successfully submitted the evaluation!');
+          setTimeout(function() {
+            location.reload();
+          }, 500);
+        } else {
+          toastr.error('Failed to submit the evaluation: '+data['reason']);
+        }
+      })
+      .fail(function() {
+        toastr.error('Failed to submit the evaluation for unknown reasons!');
+      })
+      .always(function() {
+        $("#confirmModal").modal('hide');
+        $('#confirm-evaluate').find("i").remove();
+        $('#confirm-evaluate').prop("disabled", false);
+      }, "json");
+  });
+}
+
+
 function show_perturb_analysis() {
   var evaluation_list = '<ul>';
   var option_idx = 1;
@@ -130,26 +173,32 @@ function reg_perturb_btn() {
   });
 }
 
-function reg_confirm_evaluate() {
-  $('#confirm-evaluate').on('click', function (e) {
+function reg_confirm_perturb() {
+  $('#confirm-pa').on('click', function (e) {
     $(this).prepend('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i>');
     $(this).prop("disabled", true);
     var cur_uid = $("#cur_uid").text();
     var cur_apikey = $("#cur_apikey").text();
     var model_id = $("#cur_mid").text();
-    var evaluation_list = [];
-    $("#evaluate_select option:selected").each(function()
+    var query_list = [];
+    $("#pertub_coll_select option:selected").each(function()
     {
-      evaluation_list.push($(this).val());
+      query_list.push($(this).val());
     });
-    query_list = evaluation_list.join(',');
+    query_list = query_list.join(',');
+
+    var perturb_type_list = [];
+    $("#pertub_coll_select option:selected").each(function()
+    {
+      perturb_type_list.push($(this).val());
+    });
+    perturb_type_list = perturb_type_list.join(',');
     $.post('/api/play/evaluate_model.php', { 
         uid: cur_uid, 
         apikey: cur_apikey, 
         mid: model_id,
         query_list: query_list,
-        pertube_type: 0, 
-        pertube_paras_str: ""
+        pertube_type_list: perturb_type_list
       })
       .done(function(data) {
         //console.log(data);
@@ -166,9 +215,9 @@ function reg_confirm_evaluate() {
         toastr.error('Failed to submit the evaluation for unknown reasons!');
       })
       .always(function() {
-        $("#confirmModal").modal('hide');
-        $('#confirm-evaluate').find("i").remove();
-        $('#confirm-evaluate').prop("disabled", false);
+        $("#PAconfirmModal").modal('hide');
+        $('#confirm-pa').find("i").remove();
+        $('#confirm-pa').prop("disabled", false);
       }, "json");
   });
 }

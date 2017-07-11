@@ -7,8 +7,7 @@ $result = $dao_play->evaluate_model(
     $util->getFromPost($_POST, "apikey"), 
     $util->getFromPost($_POST, "mid"), 
     $util->getFromPost($_POST, "query_list"),
-    $util->getFromPost($_POST, "pertube_type"),
-    $util->getFromPost($_POST, "pertube_paras_str")
+    $util->getFromPost($_POST, "pertube_type_list")
 );  
 echo json_encode(array("status" => 200, "data" => $result));
 ?>
