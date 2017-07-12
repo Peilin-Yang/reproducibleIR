@@ -85,8 +85,6 @@ class DAOPlay extends DAO {
         $this->validate_user($uid, $apikey);
         $query_list = explode(",", $query_list_str);
         $pertube_type_list = explode(",", $pertube_type_list_str);
-        var_dump($query_list);
-        var_dump($pertube_type_list);
         foreach ($query_list as $query_tag) {
             try {
                 $find_stmt = $db->prepare(self::SQL_FIND_EVALUATE);
@@ -94,16 +92,15 @@ class DAOPlay extends DAO {
                 $find_stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
                 foreach ($pertube_type_list as $pertube_type) {
                     $find_stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
-                    var_dump($pertube_type);
                     switch ($pertube_type) {
                         case '0':
                             $find_stmt->bindValue(':pertube_paras_str', "", PDO::PARAM_STR);
-                            $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type);
+                            $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, "");
                             break;
                         case '1':
                             foreach (range(0.1, 1, 0.1) as $pace) {
                                 $find_stmt->bindValue(':pertube_paras_str', $pace, PDO::PARAM_STR);
-                                $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type);
+                                $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $pace);
                             }
                             break;
                         default:
