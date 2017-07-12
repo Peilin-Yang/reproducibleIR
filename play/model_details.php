@@ -171,7 +171,7 @@ require_once "template.php";
           </div>
           <div id="collapsePA" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPA">
             <div id="pa-content" class="row panel-body">              
-              <div class="col-sm-6 col-md-6 col-lg-6"> 
+              <div class="col-sm-12 col-md-12 col-lg-12"> 
                 <div id="compile_status"></div>
                 <div id="compile_msg"></div>
                 <div class="row">

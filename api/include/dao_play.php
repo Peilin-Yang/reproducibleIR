@@ -4,9 +4,9 @@ require_once "dao.php";
 class DAOPlay extends DAO {
     const SQL_ADD_MODEL = "INSERT INTO models (uid, mname, mpara, mnotes, mbody, submitted_dt, last_modified_dt, compile_status) VALUES(:uid, :mname, :mpara, :mnotes, :mbody, :submitted_dt, :last_modified_dt, :compile_status)";
     const SQL_UPDATE_MODEL = "UPDATE models SET mname=:mname, mpara=:mpara, mnotes=:mnotes, mbody=:mbody, last_modified_dt=:last_modified_dt, compile_status=:compile_status WHERE mid=:mid";
-    const SQL_FIND_EVALUATE = "SELECT * FROM evaluation WHERE mid=:mid and query_tag=:query_tag and pertube_type=:pertube_type";
+    const SQL_FIND_EVALUATE = "SELECT * FROM evaluation WHERE mid=:mid and query_tag=:query_tag and pertube_type=:pertube_type and pertube_paras_str=:pertube_paras_str";
     const SQL_ADD_EVALUATE = "INSERT INTO evaluation (mid, query_tag, pertube_type, pertube_paras_str, submitted_dt) VALUES(:mid, :query_tag, :pertube_type, :pertube_paras_str, :submitted_dt)";
-    const SQL_UPDATE_EVALUATE = "UPDATE evaluation SET submitted_dt=:submitted_dt, evaluate_status=-1 WHERE mid=:mid and query_tag=:query_tag and pertube_type=:pertube_type";
+    const SQL_UPDATE_EVALUATE = "UPDATE evaluation SET submitted_dt=:submitted_dt, evaluate_status=-1 WHERE mid=:mid and query_tag=:query_tag and pertube_type=:pertube_type and pertube_paras_str=:pertube_paras_str";
     const SQL_GET_ALL_MODELS_LIST = 'SELECT m.mid,CONCAT(u.firstname,CONCAT(" ", u.lastname)) AS user,m.mname,m.mpara,m.last_modified_dt FROM models m, users u WHERE m.compile_status=0 AND u.uid=m.uid';
     const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
     const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
@@ -63,18 +63,17 @@ class DAOPlay extends DAO {
         }
     }
 
-    private function find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type) {
+    private function find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $pertube_paras_str) {
         $find_stmt->execute();
         if ($find_stmt->rowCount() == 0) {
             $update_stmt = $db->prepare(self::SQL_ADD_EVALUATE);
-            $update_stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
-            $update_stmt->bindValue(':pertube_paras_str', $pertube_paras_str, PDO::PARAM_STR);
         } else {
             $update_stmt = $db->prepare(self::SQL_UPDATE_EVALUATE);
         }
         $update_stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
         $update_stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
         $update_stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
+        $update_stmt->bindValue(':pertube_paras_str', $pertube_paras_str, PDO::PARAM_STR);
         $update_stmt->bindValue(':submitted_dt', gmdate('Y-m-d H:i:s'), PDO::PARAM_STR);
         $update_stmt->execute();
     }
@@ -95,6 +94,7 @@ class DAOPlay extends DAO {
                     switch ($pertube_type) {
                         case '0':
                             $find_stmt->bindValue(':pertube_paras_str', "", PDO::PARAM_STR);
+                            $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type);
                             break;
                         case '1':
                             foreach (range(0.1, 1, 0.1) as $pace) {
@@ -106,19 +106,6 @@ class DAOPlay extends DAO {
                             # code...
                             break;
                     }
-                    $find_stmt->execute();
-                    if ($find_stmt->rowCount() == 0) {
-                        $stmt = $db->prepare(self::SQL_ADD_EVALUATE);
-                        $stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
-                        $stmt->bindValue(':pertube_paras_str', $pertube_paras_str, PDO::PARAM_STR);
-                    } else {
-                        $stmt = $db->prepare(self::SQL_UPDATE_EVALUATE);
-                    }
-                    $stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
-                    $stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
-                    $stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
-                    $stmt->bindValue(':submitted_dt', gmdate('Y-m-d H:i:s'), PDO::PARAM_STR);
-                    $stmt->execute();
                 }
             } catch( PDOException $Exception ) {
                 throw new RuleException($Exception->getMessage(), 401);
