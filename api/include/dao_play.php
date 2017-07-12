@@ -71,7 +71,6 @@ class DAOPlay extends DAO {
         } else {
             $update_stmt = $db->prepare(self::SQL_UPDATE_EVALUATE);
         }
-        var_dump($find_stmt);
         $update_stmt->bindValue(':mid', $mid, PDO::PARAM_STR);
         $update_stmt->bindValue(':query_tag', $query_tag, PDO::PARAM_STR);
         $update_stmt->bindValue(':pertube_type', $pertube_type, PDO::PARAM_STR);
@@ -100,8 +99,9 @@ class DAOPlay extends DAO {
                             break;
                         case '1':
                             foreach (range(0.1, 1, 0.1) as $pace) {
-                                $find_stmt->bindValue(':pertube_paras_str', "b:".$pace, PDO::PARAM_STR);
-                                $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $pace);
+                                $para_str = "b:".$pace;
+                                $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);
+                                $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
                         default:
