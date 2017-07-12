@@ -328,6 +328,7 @@ function get_queries() {
         $("#pertub_type_select").multiselect();
         $("#pertub_coll_select").multiselect();
         reg_confirm_evaluate();
+        reg_confirm_perturb();
         fill_query_info(data['data']);
       } else {
         toastr.error('Failed to get query list:'+data['reason']);
