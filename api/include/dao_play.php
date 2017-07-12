@@ -63,7 +63,7 @@ class DAOPlay extends DAO {
         }
     }
 
-    private function find_or_update_evaluation_entry($find_stmt, $mid, ) {
+    private function find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type) {
         $find_stmt->execute();
         if ($find_stmt->rowCount() == 0) {
             $update_stmt = $db->prepare(self::SQL_ADD_EVALUATE);
@@ -99,7 +99,7 @@ class DAOPlay extends DAO {
                         case '1':
                             foreach (range(0.1, 1, 0.1) as $pace) {
                                 $find_stmt->bindValue(':pertube_paras_str', $pace, PDO::PARAM_STR);
-                                $this->find_or_update_evaluation_entry($find_stmt);
+                                $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type);
                             }
                             break;
                         default:
@@ -137,6 +137,7 @@ class DAOPlay extends DAO {
     public function get_all_models_list($uid, $apikey, 
             $start = "0", $end = "-1") {
         $this->validate_user($uid, $apikey);
+        var_dump('1');
         try {
             global $db;
             $sql_qry = self::SQL_GET_ALL_MODELS_LIST;
@@ -151,12 +152,14 @@ class DAOPlay extends DAO {
                 }
                 $sql_qry .= " limit $offset, $count";
             }
+            var_dump('2');
             $stmt = $db->prepare($sql_qry);
             if (!empty($request_uid)) {
                 $stmt->bindValue(':uid', $request_uid, PDO::PARAM_STR);
             }
-            //var_dump($sql_qry);
+            var_dump($sql_qry);
             $stmt->execute();
+            var_dump('3');
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $row;
         } catch( PDOException $Exception ) {
