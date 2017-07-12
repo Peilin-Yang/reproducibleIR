@@ -84,6 +84,8 @@ class DAOPlay extends DAO {
         $this->validate_user($uid, $apikey);
         $query_list = explode(",", $query_list_str);
         $pertube_type_list = explode(",", $pertube_type_list_str);
+        var_dump($query_list);
+        var_dump($pertube_type_list);
         foreach ($query_list as $query_tag) {
             try {
                 global $db;
