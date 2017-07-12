@@ -66,6 +66,7 @@ class DAOPlay extends DAO {
     private function find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $pertube_paras_str) {
         global $db;
         $find_stmt->execute();
+        var_dump($find_stmt);
         if ($find_stmt->rowCount() == 0) {
             $update_stmt = $db->prepare(self::SQL_ADD_EVALUATE);
         } else {
