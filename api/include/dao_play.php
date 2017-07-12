@@ -99,7 +99,7 @@ class DAOPlay extends DAO {
                             break;
                         case '1':
                             foreach (range(0.1, 1, 0.1) as $pace) {
-                                $find_stmt->bindValue(':pertube_paras_str', $pace, PDO::PARAM_STR);
+                                $find_stmt->bindValue(':pertube_paras_str', "b:".$pace, PDO::PARAM_STR);
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $pace);
                             }
                             break;
