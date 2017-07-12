@@ -181,7 +181,7 @@ function reg_confirm_perturb() {
     var cur_apikey = $("#cur_apikey").text();
     var model_id = $("#cur_mid").text();
     var query_list = [];
-    $("#pertub_coll_select option:selected").each(function()
+    $("#pertub_type_select option:selected").each(function()
     {
       query_list.push($(this).val());
     });
