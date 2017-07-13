@@ -11,7 +11,7 @@ class DAOPlay extends DAO {
     const SQL_GET_MODEL_LIST = "SELECT mid,mname,mpara,submitted_dt,last_modified_dt,last_compile_dt,compile_status FROM models";
     const SQL_GET_MODEL_DETAIL = "SELECT * FROM models WHERE mid=:mid LIMIT 1";
     const SQL_GET_MODEL_EVALUATION_DETAIL = "SELECT e.id, e.pertube_type, e.evaluated_dt, e.evaluate_status, e.evaluate_msg, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag and e.pertube_type=:pertube_type";
-    const SQL_GET_PERTUBE_EVALUATION = "SELECT e.pertube_type, e.pertube_paras_str, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag and e.pertube_type!=0 and e.evaluate_status=0 GROUP BY e.pertube_type, q.name, m.mname";
+    const SQL_GET_PERTUBE_EVALUATION = "SELECT e.pertube_type, e.pertube_paras_str, e.performances, q.name, m.mname FROM evaluation as e, models as m, query_paths as q WHERE e.mid=:mid and m.mid=:mid and q.query_tag=e.query_tag and e.pertube_type!=0 and e.evaluate_status=0 GROUP BY e.pertube_type, q.name";
     const SQL_GET_INDEX_LIST = "SELECT * FROM index_paths";
     const SQL_GET_INDEX_DETAIL = "SELECT * FROM index_paths WHERE id=:id LIMIT 1";
     const SQL_GET_QUERY_LIST = "SELECT * FROM query_paths";
