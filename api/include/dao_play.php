@@ -266,14 +266,14 @@ class DAOPlay extends DAO {
             $r = array();
             foreach ($rows as $row) {
                 var_dump($row);
-                $k = $row['pertube_type']+"-"+$row['name']);
-                if (!array_key_exists($k) {
-                    $r[$k] = array();
-                } 
-                $r[$k][$row['pertube_paras_str']] = $row['performances'];
-                var_dump($r);
+                // $k = $row['pertube_type']+"-"+$row['name']);
+                // if (!array_key_exists($k) {
+                //     $r[$k] = array();
+                // } 
+                // $r[$k][$row['pertube_paras_str']] = $row['performances'];
+                // var_dump($r);
             }
-            return $r;
+            return $rows;
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
         }
