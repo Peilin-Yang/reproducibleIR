@@ -265,15 +265,15 @@ class DAOPlay extends DAO {
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $r = array();
             foreach ($rows as $row) {
-                var_dump($row);
-                // $k = $row['pertube_type']+"-"+$row['name']);
-                // if (!array_key_exists($k) {
-                //     $r[$k] = array();
-                // } 
-                // $r[$k][$row['pertube_paras_str']] = $row['performances'];
-                // var_dump($r);
+                //var_dump($row);
+                $k = $row["pertube_type"]."-".$row["name"]);
+                if (!array_key_exists($k) {
+                    $r[$k] = array();
+                } 
+                $r[$k][$row["pertube_paras_str"]] = $row["performances"];
+                //var_dump($r);
             }
-            return $rows;
+            return $r;
         } catch( PDOException $Exception ) {
             throw new RuleException($Exception->getMessage(), 401);
         }
