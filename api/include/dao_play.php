@@ -268,10 +268,10 @@ class DAOPlay extends DAO {
                 //var_dump($row);
                 $k = $row["pertube_type"]."-".$row["name"];
                 var_dump($k);
-                // if (!array_key_exists($k, $r) {
-                //     $r[$k] = array();
-                // } 
-                // $r[$k][$row["pertube_paras_str"]] = $row["performances"];
+                if (!array_key_exists($k, $r)) {
+                    $r[$k] = array();
+                } 
+                $r[$k][$row["pertube_paras_str"]] = $row["performances"];
                 // var_dump($r);
             }
             return $r;
