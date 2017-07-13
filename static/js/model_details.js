@@ -222,6 +222,36 @@ function reg_confirm_perturb() {
   });
 }
 
+function get_pertube_evaluation() {
+  var cur_uid = $("#cur_uid").text();
+  var cur_apikey = $("#cur_apikey").text();
+  var model_id = $("#cur_mid").text();
+  $.getJSON('/api/play/get_pertube_evaluation.php', { 
+    uid: cur_uid, 
+    apikey: cur_apikey, 
+    mid: model_id
+   })
+    .done(function(data) {
+      //console.log(data);
+      if (data['status'] == 200) {
+        // update_query_multiselect(data['data']);
+        // $("#evaluate_select").multiselect();
+        // $("#pertub_type_select").multiselect();
+        // $("#pertub_coll_select").multiselect();
+        // reg_confirm_evaluate();
+        // reg_confirm_perturb();
+        // fill_query_info(data['data']);
+      } else {
+        toastr.error('Failed to get perterbation evaluation results:'+data['reason']);
+      }
+    })
+    .fail(function() {
+        toastr.error('Failed to get perterbation evaluation results for unknown reason!');
+    })
+    .always(function() {
+  });  
+}
+
 function fillin_form(data) {
   $("#mname").val(data['mname']);
   $("#mpara").val(data['mpara']);
@@ -408,7 +438,13 @@ function get_model_evaluation_details() {
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
   var cur_model_id = $("#cur_mid").text();
-  $.getJSON('/api/play/get_model_evaluation_details.php', { uid: cur_uid, apikey: cur_apikey, mid: cur_model_id, pertube_type: 0 })
+  $.getJSON('/api/play/get_model_evaluation_details.php', 
+    { 
+      uid: cur_uid, 
+      apikey: cur_apikey, 
+      mid: cur_model_id, 
+      pertube_type: 0 
+    })
     .done(function(data) {
       //console.log(data);
       if (data['status'] == 200) {
@@ -503,6 +539,7 @@ $(document).ready(function() {
   reg_post();
   reg_evaluate_btn();
   reg_perturb_btn();
+  get_pertube_evaluation();
 
   $('#editor').height($(window).height()*0.6);
 
