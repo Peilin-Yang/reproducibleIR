@@ -296,6 +296,7 @@ function update_pertube_evaluation_results(data) {
       }
     });
     reg_pertube_eval_res_select();
+    $("#pertube-results-select'").val($("#pertube-results-select' option:first").val());
   }
 }
 
