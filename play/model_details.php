@@ -196,9 +196,9 @@ require_once "template.php";
                   <div class="col-sm-6 col-md-6 col-lg-6" >
                     <button type="button" id="pa_btn" class="btn btn-primary">Run Perturbation Analysis</button>
                   </div>
-                  <div id="pertube-ev-res">
+                  <div id="pertube-ev-res" class="col-sm-12 col-md-12 col-lg-12">
                     <hr>
-                    <strong>Perturbation Evaluation Results</strong>
+                    <h4>Perturbation Evaluation Results</h4>
                     <hr>
                     <select id="pertube-results-select">
                       
