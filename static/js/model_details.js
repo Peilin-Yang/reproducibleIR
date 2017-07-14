@@ -229,11 +229,12 @@ function update_pertube_evaluation_results(data) {
   } else {
     $.each(data, function(k, v) {
       if ('status' in v && v['status'] === false) {
-        continue;
+        
+      } else {
+        g_pertubation_eval_res[k] = v;
+        var option_row = '<option value="'+k+'">'+k+'</option>';
+        $('#pertube-results-select').append(option_row);
       }
-      g_pertubation_eval_res[k] = v;
-      var option_row = '<option value="'+k+'">'+k+'</option>';
-      $('#pertube-results-select').append(option_row);
     });
   }
 }
