@@ -29,6 +29,16 @@ class DAOPlay extends DAO {
         "5" => "compile_status"
     ];
 
+    private static $pertube_mapping = [
+        "0" => "N/A",
+        "1" => "LV1",
+        "2" => "LV3",
+        "3" => "TN1(constant)",
+        "4" => "TN2(linear)",
+        "5" => "TG1(constant)",
+        "6" => "TG3(constant)"
+    ];
+
     public function __construct() {
 
     }
@@ -266,7 +276,7 @@ class DAOPlay extends DAO {
             $r = array();
             foreach ($rows as $row) {
                 //var_dump($row);
-                $k = $row["pertube_type"]."-".$row["name"];
+                $k = $this->pertube_mapping[$row["pertube_type"]]."+".$row["name"];
                 if (!array_key_exists($k, $r)) {
                     $r[$k] = array();
                 } 

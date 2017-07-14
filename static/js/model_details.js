@@ -1,4 +1,5 @@
 var g_editor;
+var g_pertubation_eval_res;
 
 function get_instruction() {
   $.blockUI({ message: "getting model implementation instruction..." });
@@ -227,20 +228,12 @@ function update_pertube_evaluation_results(data) {
     $('#pertube-ev-res').hide();
   } else {
     $.each(data, function(k, v) {
-      var replacements = {
-        "%QUERY_TAG%":obj.query_tag,
-        "%QUERY_NAME%":obj.name,
-        "%DISABLED%": obj.evaluate_status < 0 ? "disabled" : ""
-      },
-      table_row = 
-      '<option value="%QUERY_TAG%" %DISABLED%>%QUERY_NAME%</option>';
-
-      table_row = table_row.replace(/%\w+%/g, function(all) {
-         return replacements[all] || "NULL";
-      });
-      //console.log(table_row);
-      $('#evaluate_select').append(table_row);
-      $("#pertub_coll_select").append(table_row);
+      if ('status' in v && v['status'] === false) {
+        continue;
+      }
+      g_pertubation_eval_res[k] = v;
+      var option_row = '<option value="'+k+'">'+k+'</option>';
+      $('#pertube-results-select').append(option_row);
     });
   }
 }
