@@ -213,7 +213,8 @@ require_once "template.php";
                   </div>
                   </div>
                   <div id="pertube-ev-res">
-                    Perturbation Evaluation Results
+                    <hr>
+                    <strong>Perturbation Evaluation Results</strong>
                     <hr>
                     <select id="pertube-results-select">
                       
