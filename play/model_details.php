@@ -306,6 +306,7 @@ require_once "template.php";
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript" src="/static/js/jquery.jsonview.min.js"></script>
+<script type="text/javascript" src="//code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/static/js/model_details.js"></script>
 </body>
 </html>
