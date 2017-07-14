@@ -223,6 +223,65 @@ function reg_confirm_perturb() {
   });
 }
 
+function draw_pertube_highchart(data) {
+  g_chart = new Highcharts.Chart({
+    chart: {
+            type: 'line',
+            renderTo: 'draw-pertube-res'
+        },
+    title: {
+        text: data['res_tag']
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: data['xAxis'],
+        title: {
+            text: 'Perterbation Paras'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'MAP',
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+    credits: {
+        enabled: false
+    },
+    series: data['yAxis']
+  });
+}
+
+function show_pertube_eval_plots(key) {
+  var xAxis = [];
+  var yAxis = [{
+    'name': '',
+    'data': []
+  }];
+  $.each(g_pertubation_eval_res[key], function(k, v) {
+    xAxis.push(k);
+    yAxis[0]['data'].push(JSON.parse(v)['map']);
+  });
+  var data = {
+    'res_tag': key,
+    'xAxis': xAxis,
+    'yAxis': yAxis,
+  }
+  draw_pertube_highchart(data);
+}
+
+function reg_pertube_eval_res_select() {
+  $('#pertube-results-select').change(function() {
+    show_pertube_eval_plots($(this).val());
+  });
+}
+
 function update_pertube_evaluation_results(data) {
   if(jQuery.isEmptyObject(data)) {
     $('#pertube-ev-res').hide();
@@ -236,6 +295,7 @@ function update_pertube_evaluation_results(data) {
         $('#pertube-results-select').append(option_row);
       }
     });
+    reg_pertube_eval_res_select();
   }
 }
 

@@ -203,7 +203,9 @@ require_once "template.php";
                     <select id="pertube-results-select">
                       
                     </select>
+                    <div id="draw-pertube-res"> </div>
                   </div>
+
                   <div class="modal fade" id="PAconfirmModal" tabindex="-1" role="dialog" aria-labelledby="PAModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-sm">
                     <div class="modal-content">
