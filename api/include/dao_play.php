@@ -276,7 +276,7 @@ class DAOPlay extends DAO {
             $r = array();
             foreach ($rows as $row) {
                 //var_dump($row);
-                $k = static::pertube_mapping[$row["pertube_type"]]."+".$row["name"];
+                $k = static::$pertube_mapping[$row["pertube_type"]]."+".$row["name"];
                 if (!array_key_exists($k, $r)) {
                     $r[$k] = array();
                 } 
