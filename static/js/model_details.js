@@ -1,5 +1,5 @@
 var g_editor;
-var g_pertubation_eval_res;
+var g_pertubation_eval_res = {};
 
 function get_instruction() {
   $.blockUI({ message: "getting model implementation instruction..." });
