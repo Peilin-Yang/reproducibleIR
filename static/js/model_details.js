@@ -222,6 +222,29 @@ function reg_confirm_perturb() {
   });
 }
 
+function update_pertube_evaluation_results(data) {
+  if(jQuery.isEmptyObject(data)) {
+    $('#pertube-ev-res').hide();
+  } else {
+    $.each(data, function(i, obj) {
+      var replacements = {
+        "%QUERY_TAG%":obj.query_tag,
+        "%QUERY_NAME%":obj.name,
+        "%DISABLED%": obj.evaluate_status < 0 ? "disabled" : ""
+      },
+      table_row = 
+      '<option value="%QUERY_TAG%" %DISABLED%>%QUERY_NAME%</option>';
+
+      table_row = table_row.replace(/%\w+%/g, function(all) {
+         return replacements[all] || "NULL";
+      });
+      //console.log(table_row);
+      $('#evaluate_select').append(table_row);
+      $("#pertub_coll_select").append(table_row);
+    });
+  }
+}
+
 function get_pertube_evaluation() {
   var cur_uid = $("#cur_uid").text();
   var cur_apikey = $("#cur_apikey").text();
@@ -234,13 +257,7 @@ function get_pertube_evaluation() {
     .done(function(data) {
       //console.log(data);
       if (data['status'] == 200) {
-        // update_query_multiselect(data['data']);
-        // $("#evaluate_select").multiselect();
-        // $("#pertub_type_select").multiselect();
-        // $("#pertub_coll_select").multiselect();
-        // reg_confirm_evaluate();
-        // reg_confirm_perturb();
-        // fill_query_info(data['data']);
+        update_pertube_evaluation_results(data['data']);
       } else {
         toastr.error('Failed to get perterbation evaluation results:'+data['reason']);
       }
