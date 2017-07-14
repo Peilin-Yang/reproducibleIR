@@ -226,7 +226,7 @@ function update_pertube_evaluation_results(data) {
   if(jQuery.isEmptyObject(data)) {
     $('#pertube-ev-res').hide();
   } else {
-    $.each(data, function(i, obj) {
+    $.each(data, function(k, v) {
       var replacements = {
         "%QUERY_TAG%":obj.query_tag,
         "%QUERY_NAME%":obj.name,
