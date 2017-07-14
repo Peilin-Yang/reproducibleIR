@@ -196,6 +196,14 @@ require_once "template.php";
                   <div class="col-sm-6 col-md-6 col-lg-6" >
                     <button type="button" id="pa_btn" class="btn btn-primary">Run Perturbation Analysis</button>
                   </div>
+                  <div id="pertube-ev-res">
+                    <hr>
+                    <strong>Perturbation Evaluation Results</strong>
+                    <hr>
+                    <select id="pertube-results-select">
+                      
+                    </select>
+                  </div>
                   <div class="modal fade" id="PAconfirmModal" tabindex="-1" role="dialog" aria-labelledby="PAModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -211,14 +219,6 @@ require_once "template.php";
                       </div>
                     </div>
                   </div>
-                  </div>
-                  <div id="pertube-ev-res">
-                    <hr>
-                    <strong>Perturbation Evaluation Results</strong>
-                    <hr>
-                    <select id="pertube-results-select">
-                      
-                    </select>
                   </div>
                 </div>
               </div>     
