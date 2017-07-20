@@ -183,15 +183,21 @@ require_once "template.php";
                     Please refer to <a href="https://www.eecis.udel.edu/~hfang/pubs/tois09.pdf">our paper</a> for details.
                   </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >
-                    <select id="pertub_type_select" multiple="multiple">
-                      <option value="1">LV1</option>
-                      <option value="3">LV3</option>
-                      <option value="4">TN1(constant)</option>
-                      <option value="5">TN2(linear)</option>
-                      <option value="6">TG1(constant)</option>
-                      <option value="10">TG3(constant)</option>
-                    </select>
-                    <select id="pertub_coll_select" multiple="multiple"></select>
+                    <div class="form-group">
+                      <label for="pertube_type_select">Please select the type(s) of perturbation</label>
+                      <select id="pertub_type_select" multiple="multiple">
+                        <option value="1">LV1</option>
+                        <option value="3">LV3</option>
+                        <option value="4">TN1(constant)</option>
+                        <option value="5">TN2(linear)</option>
+                        <option value="6">TG1(constant)</option>
+                        <option value="10">TG3(constant)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="pertub_coll_select">Please select the testing collection(s)</label>
+                      <select id="pertub_coll_select" multiple="multiple"></select>
+                    </div>
                   </div>
                   <div class="col-sm-6 col-md-6 col-lg-6" >
                     <button type="button" id="pa_btn" class="btn btn-primary">Run Perturbation Analysis</button>
