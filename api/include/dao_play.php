@@ -115,35 +115,35 @@ class DAOPlay extends DAO {
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
-                        case '2': //LV3
+                        case '3': //LV3
                             foreach (range(0, 3, 1) as $pace) {
                                 $para_str = "k:".pow(10, $pace);
                                 $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
-                        case '3': //TN1(constant)
+                        case '4': //TN1(constant)
                             foreach (range(0, 6, 1) as $pace) {
                                 $para_str = "k:".pow(10, $pace);
                                 $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
-                        case '4': //TN2(linear)
+                        case '5': //TN2(linear)
                             foreach (range(-1, 4, 1) as $pace) {
                                 $para_str = "b:".pow(10, $pace);
                                 $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
-                        case '5': //TG1(constant)
+                        case '6': //TG1(constant)
                             foreach (range(0, 6, 1) as $pace) {
                                 $para_str = "k:".pow(10, $pace);
                                 $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);
                                 $this->find_or_update_evaluation_entry($find_stmt, $mid, $query_tag, $pertube_type, $para_str);
                             }
                             break;
-                        case '6': //TG3(constant)
+                        case '10': //TG3(constant)
                             foreach (range(0, 6, 1) as $pace) {
                                 $para_str = "k:".pow(10, $pace);
                                 $find_stmt->bindValue(':pertube_paras_str', $para_str, PDO::PARAM_STR);

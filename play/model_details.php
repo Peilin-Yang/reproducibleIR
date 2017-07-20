@@ -185,11 +185,11 @@ require_once "template.php";
                   <div class="col-sm-6 col-md-6 col-lg-6" >
                     <select id="pertub_type_select" multiple="multiple">
                       <option value="1">LV1</option>
-                      <option value="2">LV3</option>
-                      <option value="3">TN1(constant)</option>
-                      <option value="4">TN2(linear)</option>
-                      <option value="5">TG1(constant)</option>
-                      <option value="6">TG3(constant)</option>
+                      <option value="3">LV3</option>
+                      <option value="4">TN1(constant)</option>
+                      <option value="5">TN2(linear)</option>
+                      <option value="6">TG1(constant)</option>
+                      <option value="10">TG3(constant)</option>
                     </select>
                     <select id="pertub_coll_select" multiple="multiple"></select>
                   </div>
