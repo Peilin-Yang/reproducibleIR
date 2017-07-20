@@ -182,7 +182,7 @@ require_once "template.php";
                   <div class="col-sm-12 col-md-12 col-lg-12">
                     Please refer to <a href="https://www.eecis.udel.edu/~hfang/pubs/tois09.pdf">our paper</a> for details.
                   </div>
-                  <div class="col-sm-6 col-md-6 col-lg-6" >
+                  <div class="col-sm-9 col-md-9 col-lg-9" >
                     <div class="form-group">
                       <label for="pertube_type_select">Please select the type(s) of perturbation</label>
                       <select id="pertub_type_select" multiple="multiple">
@@ -199,7 +199,7 @@ require_once "template.php";
                       <select id="pertub_coll_select" multiple="multiple"></select>
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-6 col-lg-6" >
+                  <div class="col-sm-3 col-md-3 col-lg-3" >
                     <button type="button" id="pa_btn" class="btn btn-primary">Run Perturbation Analysis</button>
                   </div>
                   <div id="pertube-ev-res" class="col-sm-12 col-md-12 col-lg-12">
