@@ -32,11 +32,11 @@ class DAOPlay extends DAO {
     private static $pertube_mapping = [
         "0" => "N/A",
         "1" => "LV1",
-        "2" => "LV3",
-        "3" => "TN1(constant)",
-        "4" => "TN2(linear)",
-        "5" => "TG1(constant)",
-        "6" => "TG3(constant)"
+        "3" => "LV3",
+        "4" => "TN1(constant)",
+        "5" => "TN2(linear)",
+        "6" => "TG1(constant)",
+        "10" => "TG3(constant)"
     ];
 
     public function __construct() {
